@@ -1,20 +1,45 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native"; //dùng để quản lý, chuyển màn hình.
+import React, { Component } from "react";
+import SplashScreen from "./src/screen/SplashScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import WelcomeScreen from "./src/screen/WelcomeScreen";
+import LoginScreen from "./src/screen/LoginScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+const IntroStack = createStackNavigator();
+const RootStack = createStackNavigator();
+
+global.currentScreenIndex = 0;
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  IntroStackScreen = () => (
+    <IntroStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <IntroStack.Screen name="SplashScreen" component={SplashScreen} />
+      <IntroStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+    </IntroStack.Navigator>
   );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  render() {
+    return (
+      <NavigationContainer>
+        <RootStack.Navigator
+          screenOptions={{
+            headerShown: false,
+            animationEnabled: false,
+          }}
+        >
+          <RootStack.Screen name="Intro" component={this.IntroStackScreen} />
+          <RootStack.Screen name="Login" component={LoginScreen} />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
