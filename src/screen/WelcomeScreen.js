@@ -41,9 +41,7 @@ export default class WelcomeScreen extends Component {
         <ImageBackground
           source={item.image}
           style={styles.image}
-        >
-            
-        </ImageBackground>
+        ></ImageBackground>
       </View>
     );
   };

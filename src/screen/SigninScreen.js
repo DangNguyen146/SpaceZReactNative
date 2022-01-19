@@ -26,7 +26,7 @@ let customFonts = {
   "BalooTamma2-SemiBold": require("../assets/font/BalooTamma2-SemiBold.ttf"),
 };
 
-export default class LoginScreen extends Component {
+export default class SigninScreen extends Component {
   state = {
     fontsLoaded: false,
   };
@@ -79,9 +79,21 @@ export default class LoginScreen extends Component {
               >
                 <View style={styles.up}>
                   <LogoScreen />
-                  <Text style={styles.title}>Đăng nhập</Text>
+                  <Text style={styles.title}>Đăng ký</Text>
                 </View>
                 <View style={styles.center}>
+                  <View style={styles.divider}>
+                    <TextInput
+                      style={styles.line}
+                      placeholder="Nhập họ"
+                      placeholderTextColor={"#B7B9B8"}
+                    ></TextInput>
+                    <TextInput
+                      style={styles.line}
+                      placeholder="Nhập tên"
+                      placeholderTextColor={"#B7B9B8"}
+                    ></TextInput>
+                  </View>
                   <View style={styles.textInputContainer}>
                     <TextInput
                       style={styles.textInput}
@@ -94,21 +106,31 @@ export default class LoginScreen extends Component {
                   <View style={styles.textInputContainer}>
                     <TextInput
                       style={styles.textInput}
+                      placeholder="Nhập tên đăng nhập"
+                      placeholderTextColor={"#B7B9B8"}
+                    ></TextInput>
+                  </View>
+                  <View style={styles.textInputContainer}>
+                    <TextInput
+                      style={styles.textInput}
                       placeholder="Nhập mật khẩu"
                       placeholderTextColor={"#B7B9B8"}
                       secureTextEntry={true}
                     ></TextInput>
                   </View>
-                  <TouchableOpacity style={styles.linkText}>
-                    <Text style={{ color: "#236BFE" }}>Quên mật khẩu</Text>
-                  </TouchableOpacity>
+                  <View style={styles.textInputContainer}>
+                    <TextInput
+                      style={styles.textInput}
+                      placeholder="Nhập lại mật khẩu"
+                      placeholderTextColor={"#B7B9B8"}
+                      secureTextEntry={true}
+                    ></TextInput>
+                  </View>
                   <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.textLogin}>Đăng nhập</Text>
+                    <Text style={styles.textLogin}>Đăng ký</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.down}>
-                  <Divider style={styles.divider}></Divider>
-                  <LoginWith style={styles.divider}></LoginWith>
                   <View style={styles.divider}>
                     <Text
                       style={{
@@ -118,11 +140,11 @@ export default class LoginScreen extends Component {
                         marginTop: 15,
                       }}
                     >
-                      Bạn chưa có tài khoản?
+                      Bạn đã có tài khoản?
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
-                        this.props.navigation.navigate("Signin");
+                        this.props.navigation.navigate("Login");
                       }}
                     >
                       <Text
@@ -133,7 +155,7 @@ export default class LoginScreen extends Component {
                           marginTop: 15,
                         }}
                       >
-                        Đăng ký ngay!
+                        Đăng nhập ngay!
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -162,20 +184,20 @@ const styles = StyleSheet.create({
   },
 
   up: {
-    flex: 4,
+    flex: 3,
     top: 0,
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
   },
   center: {
-    flex: 4,
+    flex: 6,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
   },
   down: {
-    flex: 2,
+    flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -219,9 +241,14 @@ const styles = StyleSheet.create({
     width: 300,
   },
   line: {
-    height: 1,
+    marginTop: 7,
+    width: 2000,
+    height: 45,
+    borderColor: "#236BFE",
+    borderWidth: 2,
+    borderRadius: 10,
     flex: 2,
-    backgroundColor: Color.white,
+    padding: 10,
   },
   textOr: {
     flex: 1,

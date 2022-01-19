@@ -4,6 +4,7 @@ import SplashScreen from "./src/screen/SplashScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "./src/screen/WelcomeScreen";
 import LoginScreen from "./src/screen/LoginScreen";
+import SigninScreen from "./src/screen/SigninScreen";
 
 const IntroStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -15,6 +16,7 @@ export default class App extends Component {
     super(props);
     this.state = {};
   }
+
   IntroStackScreen = () => (
     <IntroStack.Navigator
       screenOptions={{
@@ -38,8 +40,11 @@ export default class App extends Component {
         >
           <RootStack.Screen name="Intro" component={this.IntroStackScreen} />
           <RootStack.Screen name="Login" component={LoginScreen} />
+          <RootStack.Screen name="Signin" component={SigninScreen} />
         </RootStack.Navigator>
       </NavigationContainer>
     );
   }
 }
+
+// https://youtu.be/OxXqywMaFV8 ==>tabbar

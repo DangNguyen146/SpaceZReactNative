@@ -3,10 +3,6 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import Color from "../theme/Color";
 
 export default class SplashScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   performTimeConsumingTask = async () => {
     return new Promise((resolve) =>
       setTimeout(() => {
@@ -47,6 +43,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     textAlign: "center",
-    fontFamily: "BalooTamma2-ExtraBold",
   },
 });
