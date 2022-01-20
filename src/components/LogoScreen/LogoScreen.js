@@ -7,7 +7,7 @@ export default class LogoScreen extends Component {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require("../assets/images/logo/Logo.png")}
+          source={require("../../assets/images/logo/Logo.png")}
         />
       </View>
     );

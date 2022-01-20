@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import LogoScreen from "../components/LogoScreen";
+import LogoScreen from "../components/LogoScreen/LogoScreen";
 import {
   Image,
   StyleSheet,
@@ -11,12 +11,28 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 
 import Color from "../theme/Color";
 
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import UserInput from "../components/UserInput/UserInput";
+import Validator from "../utils/Validator/Validator";
+import {
+  DEFAULT_RULE,
+  EMAIL_RULE,
+  USER_NAME_RULE,
+  PASSWORD_RULE,
+  NAME_RULE,
+  CURENT_PASSWORD_RULE,
+} from "../utils/Validator/rule";
+import String from "../theme/String";
 
 let customFonts = {
   "BalooTamma2-ExtraBold": require("../assets/font/BalooTamma2-ExtraBold.ttf"),
@@ -25,11 +41,29 @@ let customFonts = {
   "BalooTamma2-Regular": require("../assets/font/BalooTamma2-Regular.ttf"),
   "BalooTamma2-SemiBold": require("../assets/font/BalooTamma2-SemiBold.ttf"),
 };
+const { width: WIDTH } = Dimensions.get("window");
 
 export default class SigninScreen extends Component {
-  state = {
-    fontsLoaded: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      fontsLoaded: false,
+      secureTextEntry1: true,
+      secureTextEntry2: true,
+      firstName: "",
+      firstNameError: "",
+      lastName: "",
+      lastNameError: "",
+      email: "",
+      emailError: "",
+      userName: "",
+      userNameError: "",
+      password: "",
+      passwordError: "",
+      curentpassword: "",
+      curentpasswordError: "",
+    };
+  }
   async _loadFontsAsync() {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
@@ -37,34 +71,89 @@ export default class SigninScreen extends Component {
   componentDidMount() {
     this._loadFontsAsync();
   }
+  resetState = () => {
+    this.setState({
+      firstNameError: "",
+      lastNameError: "",
+      emailError: "",
+      userNameError: "",
+      passwordError: "",
+      curentpasswordError: "",
+    });
+  };
+  register = () => {
+    const {
+      firstName,
+      firstNameError,
+      lastName,
+      lastNameError,
+      email,
+      emailError,
+      userName,
+      userNameError,
+      password,
+      passwordError,
+      curentpassword,
+      curentpasswordError,
+    } = this.state;
+    if (!Validator(firstName, DEFAULT_RULE)) {
+      this.setState({
+        firstNameError: String.firstNameError,
+      });
+      return;
+    }
+    if (!Validator(lastName, DEFAULT_RULE)) {
+      this.setState({
+        lastNameError: String.lastNameError,
+      });
+      return;
+    }
+    if (!Validator(email, DEFAULT_RULE)) {
+      this.setState({
+        emailError: String.emailError,
+      });
+      return;
+    }
+    if (!Validator(email, EMAIL_RULE)) {
+      this.setState({
+        emailError: String.emailError1,
+      });
+      return;
+    }
+    if (!Validator(userName, DEFAULT_RULE)) {
+      this.setState({
+        userNameError: String.userNameError,
+      });
+      return;
+    }
+    if (!Validator(userName, USER_NAME_RULE)) {
+      this.setState({
+        userNameError: String.userNameError1,
+      });
+      return;
+    }
+    if (!Validator(password, DEFAULT_RULE)) {
+      this.setState({
+        passwordError: String.passwordError,
+      });
+      return;
+    }
+    if (!Validator(curentpassword, DEFAULT_RULE)) {
+      this.setState({
+        curentpasswordError: String.curentpasswordError,
+      });
+      return;
+    }
+    if (!Validator(password, CURENT_PASSWORD_RULE, curentpassword)) {
+      this.setState({
+        curentpasswordError: String.curentpasswordError1,
+      });
+      return;
+    }
+    this.props.navigation.replace("EmailVery");
+  };
+
   render() {
-    const Divider = (props) => {
-      return (
-        <View {...props}>
-          <View style={styles.line}></View>
-          <Text style={styles.textOr}>Hoặc</Text>
-          <View style={styles.line}></View>
-        </View>
-      );
-    };
-    const LoginWith = (props) => {
-      return (
-        <View {...props}>
-          <View style={styles.logoLeft}>
-            <Image
-              style={styles.tinyLogo}
-              source={require("../assets/images/logo/facebook.png")}
-            />
-          </View>
-          <View style={styles.logoRight}>
-            <Image
-              style={styles.tinyLogo}
-              source={require("../assets/images/logo/google.png")}
-            />
-          </View>
-        </View>
-      );
-    };
     if (this.state.fontsLoaded) {
       return (
         <ImageBackground
@@ -79,55 +168,169 @@ export default class SigninScreen extends Component {
               >
                 <View style={styles.up}>
                   <LogoScreen />
-                  <Text style={styles.title}>Đăng ký</Text>
+                  <Text style={styles.title}>{String.signinCap}</Text>
                 </View>
                 <View style={styles.center}>
-                  <View style={styles.divider}>
-                    <TextInput
-                      style={styles.line}
-                      placeholder="Nhập họ"
-                      placeholderTextColor={"#B7B9B8"}
-                    ></TextInput>
-                    <TextInput
-                      style={styles.line}
-                      placeholder="Nhập tên"
-                      placeholderTextColor={"#B7B9B8"}
-                    ></TextInput>
+                  <View style={styles.textInputContainer}>
+                    <Feather
+                      name="plus-square"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.placeFirtName}
+                      placeholderTextColor={Color.gray}
+                      size={24}
+                      maxLength={50}
+                      value={this.state.firstName}
+                      errorMessage={this.state.firstNameError}
+                      onChangeText={(firstName) => {
+                        this.setState({
+                          firstName,
+                        });
+                        this.resetState();
+                      }}
+                    />
                   </View>
                   <View style={styles.textInputContainer}>
-                    <TextInput
-                      style={styles.textInput}
-                      placeholder="Nhập email"
-                      placeholderTextColor={"#B7B9B8"}
+                    <Feather
+                      name="plus-square"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.placeLastName}
+                      size={24}
+                      maxLength={50}
+                      placeholderTextColor={Color.gray}
+                      errorMessage={this.state.lastNameError}
+                      onChangeText={(lastName) => {
+                        this.setState({
+                          lastName,
+                        });
+                        this.resetState();
+                      }}
+                    />
+                  </View>
+                  <View style={styles.textInputContainer}>
+                    <MaterialCommunityIcons
+                      name="email-outline"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.palceEmail}
+                      placeholderTextColor={Color.gray}
                       textContentType="emaiAddress"
                       keyboardType="email-address"
-                    ></TextInput>
+                      errorMessage={this.state.emailError}
+                      onChangeText={(email) => {
+                        this.setState({
+                          email,
+                        });
+                        this.resetState();
+                      }}
+                    />
                   </View>
                   <View style={styles.textInputContainer}>
-                    <TextInput
-                      style={styles.textInput}
-                      placeholder="Nhập tên đăng nhập"
-                      placeholderTextColor={"#B7B9B8"}
-                    ></TextInput>
+                    <Feather
+                      name="user"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.placeUserName}
+                      placeholderTextColor={Color.gray}
+                      errorMessage={this.state.userNameError}
+                      onChangeText={(userName) => {
+                        this.setState({
+                          userName,
+                        });
+                        this.resetState();
+                      }}
+                    />
                   </View>
                   <View style={styles.textInputContainer}>
-                    <TextInput
-                      style={styles.textInput}
-                      placeholder="Nhập mật khẩu"
-                      placeholderTextColor={"#B7B9B8"}
-                      secureTextEntry={true}
-                    ></TextInput>
+                    <AntDesign
+                      name="lock"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.placePassword}
+                      placeholderTextColor={Color.gray}
+                      secureTextEntry={this.state.secureTextEntry1}
+                      errorMessage={this.state.passwordError}
+                      onChangeText={(password) => {
+                        this.setState({
+                          password,
+                        });
+                        this.resetState();
+                      }}
+                    />
+                    <TouchableOpacity
+                      style={styles.touchPassword}
+                      onPress={() => {
+                        this.setState({
+                          secureTextEntry1: !this.state.secureTextEntry1,
+                        });
+                      }}
+                    >
+                      <AntDesign
+                        name="eye"
+                        size={24}
+                        color={Color.gray}
+                        style={styles.inputIconPassword}
+                      />
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.textInputContainer}>
-                    <TextInput
-                      style={styles.textInput}
-                      placeholder="Nhập lại mật khẩu"
-                      placeholderTextColor={"#B7B9B8"}
-                      secureTextEntry={true}
-                    ></TextInput>
+                    <AntDesign
+                      name="lock"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.placeCurrentPaswword}
+                      placeholderTextColor={Color.gray}
+                      secureTextEntry={this.state.secureTextEntry2}
+                      errorMessage={this.state.curentpasswordError}
+                      onChangeText={(curentpassword) => {
+                        this.setState({
+                          curentpassword,
+                        });
+                        this.resetState();
+                      }}
+                    />
+                    <TouchableOpacity
+                      style={styles.touchPassword}
+                      onPress={() => {
+                        this.setState({
+                          secureTextEntry2: !this.state.secureTextEntry2,
+                        });
+                      }}
+                    >
+                      <AntDesign
+                        name="eye"
+                        size={24}
+                        color={Color.gray}
+                        style={styles.inputIconPassword}
+                      />
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.textLogin}>Đăng ký</Text>
+                  <TouchableOpacity
+                    style={styles.loginButton}
+                    onPress={() => {
+                      this.register();
+                    }}
+                  >
+                    <Text style={styles.textLogin}>{String.sign}</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.down}>
@@ -140,7 +343,7 @@ export default class SigninScreen extends Component {
                         marginTop: 15,
                       }}
                     >
-                      Bạn đã có tài khoản?
+                      {String.siginqes}
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
@@ -149,13 +352,13 @@ export default class SigninScreen extends Component {
                     >
                       <Text
                         style={{
-                          color: "#236BFE",
+                          color: Color.blue,
                           fontFamily: "BalooTamma2-Bold",
                           width: 100,
                           marginTop: 15,
                         }}
                       >
-                        Đăng nhập ngay!
+                        {String.logingNgay}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -203,31 +406,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    marginTop: 52,
+    marginTop: 10,
     fontSize: 26,
-    zIndex: 99,
     textAlign: "center",
     color: Color.white,
     fontFamily: "BalooTamma2-ExtraBold",
   },
   textInput: {
-    width: 320,
+    width: WIDTH - 55,
     height: 45,
-    borderColor: "#236BFE",
+    borderColor: Color.blue,
     borderWidth: 2,
     borderRadius: 10,
     marginTop: 21,
     color: Color.white,
     padding: 10,
+    paddingLeft: 45,
   },
   loginButton: {
     marginTop: 21,
-    width: 320,
+    width: WIDTH - 55,
     height: 45,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#236BFE",
+    backgroundColor: Color.blue,
   },
   textLogin: {
     fontSize: 16,
@@ -238,13 +441,13 @@ const styles = StyleSheet.create({
   linkText: {
     marginTop: 7,
     alignItems: "flex-end",
-    width: 300,
+    width: WIDTH - 55,
   },
   line: {
     marginTop: 7,
-    width: 2000,
+    width: WIDTH - 55,
     height: 45,
-    borderColor: "#236BFE",
+    borderColor: Color.blue,
     borderWidth: 2,
     borderRadius: 10,
     flex: 2,
@@ -258,7 +461,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     flexDirection: "row",
-    width: 320,
+    width: WIDTH - 55,
     height: 45,
     justifyContent: "center",
     alignItems: "center",
@@ -274,5 +477,16 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: 50,
     height: 50,
+  },
+  inputIcon: {
+    position: "absolute",
+    top: 30,
+    left: 10,
+  },
+  touchPassword: {
+    position: "absolute",
+    top: 30,
+    right: 17,
+    zIndex: 5,
   },
 });

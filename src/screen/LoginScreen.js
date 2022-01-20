@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import LogoScreen from "../components/LogoScreen";
+
 import {
   Image,
   StyleSheet,
@@ -11,12 +11,17 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 
 import Color from "../theme/Color";
 
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import LogoScreen from "../components/LogoScreen/LogoScreen";
 
 let customFonts = {
   "BalooTamma2-ExtraBold": require("../assets/font/BalooTamma2-ExtraBold.ttf"),
@@ -25,11 +30,31 @@ let customFonts = {
   "BalooTamma2-Regular": require("../assets/font/BalooTamma2-Regular.ttf"),
   "BalooTamma2-SemiBold": require("../assets/font/BalooTamma2-SemiBold.ttf"),
 };
+import Validator from "../utils/Validator/Validator";
+import {
+  DEFAULT_RULE,
+  EMAIL_RULE,
+  USER_NAME_RULE,
+  PASSWORD_RULE,
+  NAME_RULE,
+} from "../utils/Validator/rule";
+import UserInput from "../components/UserInput/UserInput";
+import String from "../theme/String";
+
+const { width: WIDTH } = Dimensions.get("window");
 
 export default class LoginScreen extends Component {
-  state = {
-    fontsLoaded: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      fontsLoaded: false,
+      secureTextEntry: true,
+      email: "",
+      emailError: "",
+      password: "",
+      passwordError: "",
+    };
+  }
   async _loadFontsAsync() {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
@@ -37,6 +62,38 @@ export default class LoginScreen extends Component {
   componentDidMount() {
     this._loadFontsAsync();
   }
+  resetState = () => {
+    this.setState({
+      firstNameError: "",
+      lastNameError: "",
+      emailError: "",
+      userNameError: "",
+      passwordError: "",
+      curentpasswordError: "",
+    });
+  };
+  login = () => {
+    const { email, emailError, password, passwordError } = this.state;
+    if (!Validator(email, DEFAULT_RULE)) {
+      this.setState({
+        emailError: String.emailError,
+      });
+      return;
+    }
+    if (!Validator(email, EMAIL_RULE)) {
+      this.setState({
+        emailError: String.emailError1,
+      });
+      return;
+    }
+    if (!Validator(password, DEFAULT_RULE)) {
+      this.setState({
+        passwordError: String.passwordError,
+      });
+      return;
+    }
+    this.props.navigation.replace("HomeScreen");
+  };
   render() {
     const Divider = (props) => {
       return (
@@ -79,31 +136,77 @@ export default class LoginScreen extends Component {
               >
                 <View style={styles.up}>
                   <LogoScreen />
-                  <Text style={styles.title}>Đăng nhập</Text>
+                  <Text style={styles.title}>{String.loginCap}</Text>
                 </View>
                 <View style={styles.center}>
                   <View style={styles.textInputContainer}>
-                    <TextInput
-                      style={styles.textInput}
-                      placeholder="Nhập email"
-                      placeholderTextColor={"#B7B9B8"}
+                    <MaterialCommunityIcons
+                      name="email-outline"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.palceEmail}
+                      placeholderTextColor={Color.gray}
                       textContentType="emaiAddress"
                       keyboardType="email-address"
-                    ></TextInput>
+                      errorMessage={this.state.emailError}
+                      onChangeText={(email) => {
+                        this.setState({
+                          email,
+                        });
+                        this.resetState();
+                      }}
+                    />
                   </View>
                   <View style={styles.textInputContainer}>
-                    <TextInput
-                      style={styles.textInput}
-                      placeholder="Nhập mật khẩu"
-                      placeholderTextColor={"#B7B9B8"}
-                      secureTextEntry={true}
-                    ></TextInput>
+                    <AntDesign
+                      name="lock"
+                      size={24}
+                      color={Color.gray}
+                      style={styles.inputIcon}
+                    />
+                    <UserInput
+                      placeholder={String.placePassword}
+                      placeholderTextColor={Color.gray}
+                      secureTextEntry={this.state.secureTextEntry}
+                      errorMessage={this.state.passwordError}
+                      onChangeText={(password) => {
+                        this.setState({
+                          password,
+                        });
+                        this.resetState();
+                      }}
+                    />
+                    <TouchableOpacity
+                      style={styles.touchPassword}
+                      onPress={() => {
+                        this.setState({
+                          secureTextEntry: !this.state.secureTextEntry,
+                        });
+                      }}
+                    >
+                      <AntDesign
+                        name="eye"
+                        size={24}
+                        color={Color.gray}
+                        style={styles.inputIconPassword}
+                      />
+                    </TouchableOpacity>
                   </View>
                   <TouchableOpacity style={styles.linkText}>
-                    <Text style={{ color: "#236BFE" }}>Quên mật khẩu</Text>
+                    <Text style={{ color: Color.blue }}>
+                      {String.forgetPassword}
+                    </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.textLogin}>Đăng nhập</Text>
+                  <TouchableOpacity
+                    style={styles.loginButton}
+                    onPress={() => {
+                      this.login();
+                    }}
+                  >
+                    <Text style={styles.textLogin}>{String.login}</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.down}>
@@ -118,7 +221,7 @@ export default class LoginScreen extends Component {
                         marginTop: 15,
                       }}
                     >
-                      Bạn chưa có tài khoản?
+                      {String.loginqes}
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
@@ -127,13 +230,13 @@ export default class LoginScreen extends Component {
                     >
                       <Text
                         style={{
-                          color: "#236BFE",
+                          color: Color.blue,
                           fontFamily: "BalooTamma2-Bold",
                           width: 100,
                           marginTop: 15,
                         }}
                       >
-                        Đăng ký ngay!
+                        {String.signinNgay}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -189,23 +292,26 @@ const styles = StyleSheet.create({
     fontFamily: "BalooTamma2-ExtraBold",
   },
   textInput: {
-    width: 320,
+    width: WIDTH - 55,
     height: 45,
-    borderColor: "#236BFE",
+    borderColor: Color.blue,
     borderWidth: 2,
     borderRadius: 10,
-    marginTop: 21,
+    marginTop: 10,
     color: Color.white,
     padding: 10,
+    paddingLeft: 45,
+    marginHorizontal: 25,
+    zIndex: 3,
   },
   loginButton: {
     marginTop: 21,
-    width: 320,
+    width: WIDTH - 55,
     height: 45,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#236BFE",
+    backgroundColor: Color.blue,
   },
   textLogin: {
     fontSize: 16,
@@ -216,7 +322,7 @@ const styles = StyleSheet.create({
   linkText: {
     marginTop: 7,
     alignItems: "flex-end",
-    width: 300,
+    width: WIDTH - 55,
   },
   line: {
     height: 1,
@@ -247,5 +353,16 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: 50,
     height: 50,
+  },
+  inputIcon: {
+    position: "absolute",
+    top: 30,
+    left: 10,
+  },
+  touchPassword: {
+    position: "absolute",
+    top: 30,
+    right: 17,
+    zIndex: 5,
   },
 });
