@@ -25,3 +25,7 @@
 ##### Icon
 
     https://icons.expo.fyi/AntDesign
+
+###### Lỗi AsyncStorage
+
+    react-native link @react-native-community/async-storage

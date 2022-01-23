@@ -12,6 +12,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
+  ToastAndroid,
 } from "react-native";
 
 import Color from "../theme/Color";
@@ -33,6 +34,8 @@ import {
   CURENT_PASSWORD_RULE,
 } from "../utils/Validator/rule";
 import String from "../theme/String";
+import { userRegister, checkInternetConnection } from "../axios/ServerRequest";
+import LoadingButton from "../components/LoadingButton";
 
 let customFonts = {
   "BalooTamma2-ExtraBold": require("../assets/font/BalooTamma2-ExtraBold.ttf"),
@@ -47,6 +50,7 @@ export default class SigninScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       fontsLoaded: false,
       secureTextEntry1: true,
       secureTextEntry2: true,
@@ -69,6 +73,7 @@ export default class SigninScreen extends Component {
     this.setState({ fontsLoaded: true });
   }
   componentDidMount() {
+    checkInternetConnection();
     this._loadFontsAsync();
   }
   resetState = () => {
@@ -80,6 +85,16 @@ export default class SigninScreen extends Component {
       passwordError: "",
       curentpasswordError: "",
     });
+  };
+  showToast = (message) => {
+    if (Platform.OS != "android") {
+      Snackbar.show({
+        text: message,
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    } else {
+      ToastAndroid.show(message, ToastAndroid.SHORT);
+    }
   };
   register = () => {
     const {
@@ -96,61 +111,82 @@ export default class SigninScreen extends Component {
       curentpassword,
       curentpasswordError,
     } = this.state;
-    if (!Validator(firstName, DEFAULT_RULE)) {
-      this.setState({
-        firstNameError: String.firstNameError,
+    // if (!Validator(firstName, DEFAULT_RULE)) {
+    //   this.setState({
+    //     firstNameError: String.firstNameError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(lastName, DEFAULT_RULE)) {
+    //   this.setState({
+    //     lastNameError: String.lastNameError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(email, DEFAULT_RULE)) {
+    //   this.setState({
+    //     emailError: String.emailError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(email, EMAIL_RULE)) {
+    //   this.setState({
+    //     emailError: String.emailError1,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(userName, DEFAULT_RULE)) {
+    //   this.setState({
+    //     userNameError: String.userNameError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(userName, USER_NAME_RULE)) {
+    //   this.setState({
+    //     userNameError: String.userNameError1,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(password, DEFAULT_RULE)) {
+    //   this.setState({
+    //     passwordError: String.passwordError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(curentpassword, DEFAULT_RULE)) {
+    //   this.setState({
+    //     curentpasswordError: String.curentpasswordError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(password, CURENT_PASSWORD_RULE, curentpassword)) {
+    //   this.setState({
+    //     curentpasswordError: String.curentpasswordError1,
+    //   });
+    //   return;
+    // }
+    this.setState({ loading: true });
+    userRegister(
+      "dang3",
+      "Nguyen3",
+      "blacksonia2",
+      "blacksonia.note@gmail.com",
+      "123dsad4"
+    )
+      .then((response) => {
+        let data = response.data;
+        if (data) {
+          this.showToast(data.mess);
+          this.props.navigation.replace("EmailVery");
+        } else {
+          this.showToast(data.mess);
+        }
+
+        this.setState({ loading: false });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      return;
-    }
-    if (!Validator(lastName, DEFAULT_RULE)) {
-      this.setState({
-        lastNameError: String.lastNameError,
-      });
-      return;
-    }
-    if (!Validator(email, DEFAULT_RULE)) {
-      this.setState({
-        emailError: String.emailError,
-      });
-      return;
-    }
-    if (!Validator(email, EMAIL_RULE)) {
-      this.setState({
-        emailError: String.emailError1,
-      });
-      return;
-    }
-    if (!Validator(userName, DEFAULT_RULE)) {
-      this.setState({
-        userNameError: String.userNameError,
-      });
-      return;
-    }
-    if (!Validator(userName, USER_NAME_RULE)) {
-      this.setState({
-        userNameError: String.userNameError1,
-      });
-      return;
-    }
-    if (!Validator(password, DEFAULT_RULE)) {
-      this.setState({
-        passwordError: String.passwordError,
-      });
-      return;
-    }
-    if (!Validator(curentpassword, DEFAULT_RULE)) {
-      this.setState({
-        curentpasswordError: String.curentpasswordError,
-      });
-      return;
-    }
-    if (!Validator(password, CURENT_PASSWORD_RULE, curentpassword)) {
-      this.setState({
-        curentpasswordError: String.curentpasswordError1,
-      });
-      return;
-    }
-    this.props.navigation.replace("EmailVery");
   };
 
   render() {
@@ -324,14 +360,24 @@ export default class SigninScreen extends Component {
                       />
                     </TouchableOpacity>
                   </View>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.loginButton}
                     onPress={() => {
                       this.register();
                     }}
                   >
                     <Text style={styles.textLogin}>{String.sign}</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
+
+                  <View style={styles.loginButton}>
+                    <LoadingButton
+                      title={String.sign}
+                      loading={this.state.loading}
+                      onPress={() => {
+                        this.register();
+                      }}
+                    />
+                  </View>
                 </View>
                 <View style={styles.down}>
                   <View style={styles.divider}>

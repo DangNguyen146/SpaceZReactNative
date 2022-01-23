@@ -12,9 +12,14 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
+  ToastAndroid,
 } from "react-native";
 
 import Color from "../theme/Color";
+
+import LoadingButton from "../components/LoadingButton";
+
+import { checkInternetConnection, userLogin } from "../axios/ServerRequest";
 
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -22,6 +27,8 @@ import AppLoading from "expo-app-loading";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import LogoScreen from "../components/LogoScreen/LogoScreen";
+
+// import Toast from "react-native-simple-toast";
 
 let customFonts = {
   "BalooTamma2-ExtraBold": require("../assets/font/BalooTamma2-ExtraBold.ttf"),
@@ -40,6 +47,9 @@ import {
 } from "../utils/Validator/rule";
 import UserInput from "../components/UserInput/UserInput";
 import String from "../theme/String";
+import { setUserDetails } from "../utils/LocalStorage";
+import axios from "axios";
+import { url } from "../utils/config/URL";
 
 const { width: WIDTH } = Dimensions.get("window");
 
@@ -47,6 +57,7 @@ export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       fontsLoaded: false,
       secureTextEntry: true,
       email: "",
@@ -60,8 +71,20 @@ export default class LoginScreen extends Component {
     this.setState({ fontsLoaded: true });
   }
   componentDidMount() {
+    checkInternetConnection();
     this._loadFontsAsync();
   }
+  showToast = (message) => {
+    if (Platform.OS != "android") {
+      Snackbar.show({
+        text: message,
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    } else {
+      ToastAndroid.show(message, ToastAndroid.SHORT);
+    }
+  };
+
   resetState = () => {
     this.setState({
       firstNameError: "",
@@ -72,6 +95,9 @@ export default class LoginScreen extends Component {
       curentpasswordError: "",
     });
   };
+  showDetails() {
+    this.props.navigation.navigate("HomeScreen");
+  }
   login = () => {
     const { email, emailError, password, passwordError } = this.state;
     if (!Validator(email, DEFAULT_RULE)) {
@@ -92,7 +118,39 @@ export default class LoginScreen extends Component {
       });
       return;
     }
-    this.props.navigation.replace("HomeScreen");
+    this.setState({ loading: true });
+    userLogin(email, password)
+      .then((response) => {
+        let data = response.data;
+        if (data) {
+          this.showToast(data.mess);
+          setUserDetails(data);
+          this.props.navigation.replace("HomeScreen");
+        } else {
+          this.showToast(data.mess);
+        }
+        this.setState({ loading: false });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // axios
+    //   .post(url + "user/login", {
+    //     email: "19521317@gm.uit.edu.vn",
+    //     password: "123dsad4",
+    //   })
+    //   .then(function (response) {
+    //     let data = response.data;
+    //     if (data != null) {
+    //       showDetails();
+    //     } else {
+    //       this.showToast(data.status);
+    //     }
+    //     this.setState({ loading: false });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
   render() {
     const Divider = (props) => {
@@ -151,6 +209,7 @@ export default class LoginScreen extends Component {
                       placeholderTextColor={Color.gray}
                       textContentType="emaiAddress"
                       keyboardType="email-address"
+                      value={this.state.email}
                       errorMessage={this.state.emailError}
                       onChangeText={(email) => {
                         this.setState({
@@ -172,6 +231,7 @@ export default class LoginScreen extends Component {
                       placeholderTextColor={Color.gray}
                       secureTextEntry={this.state.secureTextEntry}
                       errorMessage={this.state.passwordError}
+                      value={this.state.password}
                       onChangeText={(password) => {
                         this.setState({
                           password,
@@ -200,14 +260,23 @@ export default class LoginScreen extends Component {
                       {String.forgetPassword}
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.loginButton}
                     onPress={() => {
                       this.login();
                     }}
                   >
                     <Text style={styles.textLogin}>{String.login}</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
+                  <View style={styles.loginButton}>
+                    <LoadingButton
+                      title={String.login}
+                      loading={this.state.loading}
+                      onPress={() => {
+                        this.login();
+                      }}
+                    />
+                  </View>
                 </View>
                 <View style={styles.down}>
                   <Divider style={styles.divider}></Divider>
