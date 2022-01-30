@@ -99,56 +99,40 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate("HomeScreen");
   }
   login = () => {
-    const { email, emailError, password, passwordError } = this.state;
-    if (!Validator(email, DEFAULT_RULE)) {
-      this.setState({
-        emailError: String.emailError,
-      });
-      return;
-    }
-    if (!Validator(email, EMAIL_RULE)) {
-      this.setState({
-        emailError: String.emailError1,
-      });
-      return;
-    }
-    if (!Validator(password, DEFAULT_RULE)) {
-      this.setState({
-        passwordError: String.passwordError,
-      });
-      return;
-    }
-    this.setState({ loading: true });
-    userLogin(email, password)
-      .then((response) => {
-        let data = response.data;
-        if (data) {
-          this.showToast(data.mess);
-          setUserDetails(data);
-          this.props.navigation.replace("HomeScreen");
-        } else {
-          this.showToast(data.mess);
-        }
-        this.setState({ loading: false });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // axios
-    //   .post(url + "user/login", {
-    //     email: "19521317@gm.uit.edu.vn",
-    //     password: "123dsad4",
-    //   })
-    //   .then(function (response) {
+    this.props.navigation.replace("HomeScreen");
+    // const { email, emailError, password, passwordError } = this.state;
+    // if (!Validator(email, DEFAULT_RULE)) {
+    //   this.setState({
+    //     emailError: String.emailError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(email, EMAIL_RULE)) {
+    //   this.setState({
+    //     emailError: String.emailError1,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(password, DEFAULT_RULE)) {
+    //   this.setState({
+    //     passwordError: String.passwordError,
+    //   });
+    //   return;
+    // }
+    // this.setState({ loading: true });
+    // userLogin(email, password)
+    //   .then((response) => {
     //     let data = response.data;
-    //     if (data != null) {
-    //       showDetails();
+    //     if (data) {
+    //       this.showToast(data.mess);
+    //       setUserDetails(data);
+    //       this.props.navigation.replace("HomeScreen");
     //     } else {
-    //       this.showToast(data.status);
+    //       this.showToast(data.mess);
     //     }
     //     this.setState({ loading: false });
     //   })
-    //   .catch(function (error) {
+    //   .catch((error) => {
     //     console.log(error);
     //   });
   };
@@ -260,14 +244,6 @@ export default class LoginScreen extends Component {
                       {String.forgetPassword}
                     </Text>
                   </TouchableOpacity>
-                  {/* <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={() => {
-                      this.login();
-                    }}
-                  >
-                    <Text style={styles.textLogin}>{String.login}</Text>
-                  </TouchableOpacity> */}
                   <View style={styles.loginButton}>
                     <LoadingButton
                       title={String.login}

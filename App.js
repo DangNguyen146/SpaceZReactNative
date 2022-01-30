@@ -15,17 +15,35 @@ import SendMessScreen from "./src/screen/SendMessScreen/SendMessScreen";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as Font from "expo-font";
+import CreateSlug from "./src/screen/ProfileOnlineScreen/CreateSlug";
 
 const IntroStack = createStackNavigator();
+const CreateProfile = createStackNavigator();
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 global.currentScreenIndex = 0;
 
+let customFonts = {
+  "BalooTamma2-ExtraBold": require("./src/assets/font/BalooTamma2-ExtraBold.ttf"),
+  "BalooTamma2-Bold": require("./src/assets/font/BalooTamma2-Bold.ttf"),
+  "BalooTamma2-Medium": require("./src/assets/font/BalooTamma2-Medium.ttf"),
+  "BalooTamma2-Regular": require("./src/assets/font/BalooTamma2-Regular.ttf"),
+  "BalooTamma2-SemiBold": require("./src/assets/font/BalooTamma2-SemiBold.ttf"),
+};
+
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { fontsLoaded: false };
+  }
+  async _loadFontsAsync() {
+    await Font.loadAsync(customFonts);
+    this.setState({ fontsLoaded: true });
+  }
+  componentDidMount() {
+    this._loadFontsAsync();
   }
   createTab = () => (
     <Tab.Navigator
@@ -74,7 +92,17 @@ export default class App extends Component {
       <Tab.Screen name="Setting" component={SettingScreen} />
     </Tab.Navigator>
   );
-
+  ProfileStackScreen = () => (
+    <CreateProfile.Navigator
+      initialRouteName="CreateProfile"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <CreateProfile.Screen name="CreateSlug" component={CreateSlug} />
+    </CreateProfile.Navigator>
+  );
   IntroStackScreen = () => (
     <IntroStack.Navigator
       screenOptions={{
@@ -96,10 +124,14 @@ export default class App extends Component {
             animationEnabled: false,
           }}
         >
-          <RootStack.Screen name="Intro" component={this.IntroStackScreen} />
+          {/* <RootStack.Screen name="Intro" component={this.IntroStackScreen} /> */}
           <RootStack.Screen name="Login" component={LoginScreen} />
-          <RootStack.Screen name="Signin" component={SigninScreen} />
-          <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
+          {/*<RootStack.Screen name="Signin" component={SigninScreen} />
+          <RootStack.Screen name="EmailVery" component={EmailVeryScreen} /> */}
+          <RootStack.Screen
+            name="CreateProfile"
+            component={this.ProfileStackScreen}
+          />
           <RootStack.Screen name="HomeScreen" children={this.createTab} />
         </RootStack.Navigator>
       </NavigationContainer>

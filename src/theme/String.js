@@ -39,4 +39,6 @@ export default {
   passwordError: "Chưa nhập mật khẩu",
   curentpasswordError: "Chưa nhập lại mật khẩu",
   curentpasswordError1: "Nhập lại mật khẩu sai",
+
+  createProfile: "Tạo đường dẫn đầu tiên",
 };
