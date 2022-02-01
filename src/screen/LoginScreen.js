@@ -134,23 +134,6 @@ export default class LoginScreen extends Component {
       .catch((error) => {
         console.log(error);
       });
-    // axios
-    //   .post(url + "user/login", {
-    //     email: "19521317@gm.uit.edu.vn",
-    //     password: "123dsad4",
-    //   })
-    //   .then(function (response) {
-    //     let data = response.data;
-    //     if (data != null) {
-    //       showDetails();
-    //     } else {
-    //       this.showToast(data.status);
-    //     }
-    //     this.setState({ loading: false });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   };
   render() {
     const Divider = (props) => {
@@ -260,14 +243,6 @@ export default class LoginScreen extends Component {
                       {String.forgetPassword}
                     </Text>
                   </TouchableOpacity>
-                  {/* <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={() => {
-                      this.login();
-                    }}
-                  >
-                    <Text style={styles.textLogin}>{String.login}</Text>
-                  </TouchableOpacity> */}
                   <View style={styles.loginButton}>
                     <LoadingButton
                       title={String.login}
@@ -425,7 +400,7 @@ const styles = StyleSheet.create({
   },
   inputIcon: {
     position: "absolute",
-    top: 30,
+    top: 10,
     left: 10,
   },
   touchPassword: {
@@ -433,5 +408,8 @@ const styles = StyleSheet.create({
     top: 30,
     right: 17,
     zIndex: 5,
+  },
+  textInputContainer: {
+    marginTop: 21,
   },
 });

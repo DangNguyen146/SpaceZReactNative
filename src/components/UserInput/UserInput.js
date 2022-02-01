@@ -16,7 +16,16 @@ export default function UserInput(props) {
   return (
     <View style={[styles.textInputContainer, props.containerStyle]}>
       <TextInput
-        style={styles.textInput}
+        style={{
+          width: WIDTH - 55,
+          height: 45,
+          borderColor: Color.blue,
+          borderWidth: 2,
+          borderRadius: 10,
+          color: props.color ? Color.black : Color.white,
+          padding: 10,
+          paddingLeft: props.paddingLeft ? props.paddingLeft : 45,
+        }}
         onChangeText={props.onChangeText}
         value={props.value}
         placeholder={props.placeholder}
@@ -49,17 +58,7 @@ UserInput.propTypes = {};
 UserInput.defaultProps = {};
 
 const styles = StyleSheet.create({
-  textInput: {
-    width: WIDTH - 55,
-    height: 45,
-    borderColor: Color.blue,
-    borderWidth: 2,
-    borderRadius: 10,
-    marginTop: 21,
-    color: Color.white,
-    padding: 10,
-    paddingLeft: 45,
-  },
+  textInput: {},
   focusedTextInput: {
     borderColor: Color.green,
   },
@@ -74,6 +73,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 14,
     color: Color.pinkred,
-    left: 20,
+    left: 15,
   },
 });
