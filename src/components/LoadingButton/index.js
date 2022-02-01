@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: Color.white,
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "center",
     fontFamily: "BalooTamma2-ExtraBold",
   },

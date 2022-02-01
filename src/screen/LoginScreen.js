@@ -99,42 +99,41 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate("HomeScreen");
   }
   login = () => {
-    this.props.navigation.replace("HomeScreen");
-    // const { email, emailError, password, passwordError } = this.state;
-    // if (!Validator(email, DEFAULT_RULE)) {
-    //   this.setState({
-    //     emailError: String.emailError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(email, EMAIL_RULE)) {
-    //   this.setState({
-    //     emailError: String.emailError1,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(password, DEFAULT_RULE)) {
-    //   this.setState({
-    //     passwordError: String.passwordError,
-    //   });
-    //   return;
-    // }
-    // this.setState({ loading: true });
-    // userLogin(email, password)
-    //   .then((response) => {
-    //     let data = response.data;
-    //     if (data) {
-    //       this.showToast(data.mess);
-    //       setUserDetails(data);
-    //       this.props.navigation.replace("HomeScreen");
-    //     } else {
-    //       this.showToast(data.mess);
-    //     }
-    //     this.setState({ loading: false });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const { email, emailError, password, passwordError } = this.state;
+    if (!Validator(email, DEFAULT_RULE)) {
+      this.setState({
+        emailError: String.emailError,
+      });
+      return;
+    }
+    if (!Validator(email, EMAIL_RULE)) {
+      this.setState({
+        emailError: String.emailError1,
+      });
+      return;
+    }
+    if (!Validator(password, DEFAULT_RULE)) {
+      this.setState({
+        passwordError: String.passwordError,
+      });
+      return;
+    }
+    this.setState({ loading: true });
+    userLogin(email, password)
+      .then((response) => {
+        let data = response.data;
+        if (data) {
+          this.showToast(data.mess);
+          setUserDetails(data);
+          this.props.navigation.replace("HomeScreen");
+        } else {
+          this.showToast(data.mess);
+        }
+        this.setState({ loading: false });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   render() {
     const Divider = (props) => {
@@ -401,7 +400,7 @@ const styles = StyleSheet.create({
   },
   inputIcon: {
     position: "absolute",
-    top: 30,
+    top: 10,
     left: 10,
   },
   touchPassword: {
@@ -409,5 +408,8 @@ const styles = StyleSheet.create({
     top: 30,
     right: 17,
     zIndex: 5,
+  },
+  textInputContainer: {
+    marginTop: 21,
   },
 });

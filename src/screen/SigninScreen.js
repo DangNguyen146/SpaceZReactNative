@@ -111,68 +111,62 @@ export default class SigninScreen extends Component {
       curentpassword,
       curentpasswordError,
     } = this.state;
-    // if (!Validator(firstName, DEFAULT_RULE)) {
-    //   this.setState({
-    //     firstNameError: String.firstNameError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(lastName, DEFAULT_RULE)) {
-    //   this.setState({
-    //     lastNameError: String.lastNameError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(email, DEFAULT_RULE)) {
-    //   this.setState({
-    //     emailError: String.emailError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(email, EMAIL_RULE)) {
-    //   this.setState({
-    //     emailError: String.emailError1,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(userName, DEFAULT_RULE)) {
-    //   this.setState({
-    //     userNameError: String.userNameError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(userName, USER_NAME_RULE)) {
-    //   this.setState({
-    //     userNameError: String.userNameError1,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(password, DEFAULT_RULE)) {
-    //   this.setState({
-    //     passwordError: String.passwordError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(curentpassword, DEFAULT_RULE)) {
-    //   this.setState({
-    //     curentpasswordError: String.curentpasswordError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(password, CURENT_PASSWORD_RULE, curentpassword)) {
-    //   this.setState({
-    //     curentpasswordError: String.curentpasswordError1,
-    //   });
-    //   return;
-    // }
+    if (!Validator(firstName, DEFAULT_RULE)) {
+      this.setState({
+        firstNameError: String.firstNameError,
+      });
+      return;
+    }
+    if (!Validator(lastName, DEFAULT_RULE)) {
+      this.setState({
+        lastNameError: String.lastNameError,
+      });
+      return;
+    }
+    if (!Validator(email, DEFAULT_RULE)) {
+      this.setState({
+        emailError: String.emailError,
+      });
+      return;
+    }
+    if (!Validator(email, EMAIL_RULE)) {
+      this.setState({
+        emailError: String.emailError1,
+      });
+      return;
+    }
+    if (!Validator(userName, DEFAULT_RULE)) {
+      this.setState({
+        userNameError: String.userNameError,
+      });
+      return;
+    }
+    if (!Validator(userName, USER_NAME_RULE)) {
+      this.setState({
+        userNameError: String.userNameError1,
+      });
+      return;
+    }
+    if (!Validator(password, DEFAULT_RULE)) {
+      this.setState({
+        passwordError: String.passwordError,
+      });
+      return;
+    }
+    if (!Validator(curentpassword, DEFAULT_RULE)) {
+      this.setState({
+        curentpasswordError: String.curentpasswordError,
+      });
+      return;
+    }
+    if (!Validator(password, CURENT_PASSWORD_RULE, curentpassword)) {
+      this.setState({
+        curentpasswordError: String.curentpasswordError1,
+      });
+      return;
+    }
     this.setState({ loading: true });
-    userRegister(
-      "dang3",
-      "Nguyen3",
-      "blacksonia2",
-      "blacksonia.note@gmail.com",
-      "123dsad4"
-    )
+    userRegister(firstName, lastName, email, userName, password)
       .then((response) => {
         let data = response.data;
         if (data) {
@@ -526,7 +520,7 @@ const styles = StyleSheet.create({
   },
   inputIcon: {
     position: "absolute",
-    top: 30,
+    top: 10,
     left: 10,
   },
   touchPassword: {
@@ -534,5 +528,8 @@ const styles = StyleSheet.create({
     top: 30,
     right: 17,
     zIndex: 5,
+  },
+  textInputContainer: {
+    marginTop: 21,
   },
 });

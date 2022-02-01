@@ -41,4 +41,10 @@ export default {
   curentpasswordError1: "Nhập lại mật khẩu sai",
 
   createProfile: "Tạo đường dẫn đầu tiên",
+
+  nameProfile: "Nhập tên",
+  placeSlugProfile: "Nhập slug",
+
+  nameErro: "Chưa nhập tên",
+  slugErro: "Chưa nhập Slug",
 };

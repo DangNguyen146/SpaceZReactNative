@@ -17,6 +17,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import CreateSlug from "./src/screen/ProfileOnlineScreen/CreateSlug";
+import SelectTemplate from "./src/screen/ProfileOnlineScreen/SelectTemplate";
+import EditHomeProfile from "./src/screen/ProfileOnlineScreen/CreateProfile/EditHomeProfile";
+import EditContentUp from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentUp";
+import { Provider as StoreProvider } from "react-redux";
+import rootReducer from "./src/redux";
+import { createStore } from "redux";
+import { applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 const IntroStack = createStackNavigator();
 const CreateProfile = createStackNavigator();
@@ -100,7 +108,16 @@ export default class App extends Component {
         animationEnabled: false,
       }}
     >
-      <CreateProfile.Screen name="CreateSlug" component={CreateSlug} />
+      {/* <CreateProfile.Screen name="CreateSlug" component={CreateSlug} /> */}
+      {/* <CreateProfile.Screen name="SelectTemplate" component={SelectTemplate} /> */}
+      <CreateProfile.Screen
+        name="EditHomeProfileScreen"
+        component={EditHomeProfile}
+      />
+      <CreateProfile.Screen
+        name="EditContentUpScreen"
+        component={EditContentUp}
+      />
     </CreateProfile.Navigator>
   );
   IntroStackScreen = () => (
@@ -114,27 +131,29 @@ export default class App extends Component {
       <IntroStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
     </IntroStack.Navigator>
   );
-
   render() {
+    const store = createStore(rootReducer, applyMiddleware(thunk));
     return (
-      <NavigationContainer>
-        <RootStack.Navigator
-          screenOptions={{
-            headerShown: false,
-            animationEnabled: false,
-          }}
-        >
-          {/* <RootStack.Screen name="Intro" component={this.IntroStackScreen} /> */}
-          <RootStack.Screen name="Login" component={LoginScreen} />
-          {/*<RootStack.Screen name="Signin" component={SigninScreen} />
+      <StoreProvider store={store}>
+        <NavigationContainer>
+          <RootStack.Navigator
+            screenOptions={{
+              headerShown: false,
+              animationEnabled: false,
+            }}
+          >
+            {/* <RootStack.Screen name="Intro" component={this.IntroStackScreen} /> */}
+            {/* <RootStack.Screen name="Login" component={LoginScreen} /> */}
+            {/*<RootStack.Screen name="Signin" component={SigninScreen} />
           <RootStack.Screen name="EmailVery" component={EmailVeryScreen} /> */}
-          <RootStack.Screen
-            name="CreateProfile"
-            component={this.ProfileStackScreen}
-          />
-          <RootStack.Screen name="HomeScreen" children={this.createTab} />
-        </RootStack.Navigator>
-      </NavigationContainer>
+            <RootStack.Screen
+              name="CreateProfile"
+              component={this.ProfileStackScreen}
+            />
+            <RootStack.Screen name="HomeScreen" children={this.createTab} />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </StoreProvider>
     );
   }
 }

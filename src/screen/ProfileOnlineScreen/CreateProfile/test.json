@@ -1,0 +1,31 @@
+{
+    "id": 1,
+    "up": {
+        "avatar": "",
+        "name": "SpaceZ",
+        "description": "description 1"
+    },
+    "center": {
+        "facebook": "",
+        "instagram": "",
+        "twitter": "",
+        "messenger": "",
+        "dev": "",
+        "github": "",
+        "email": ""
+    },
+    "up": [
+        {
+            "id": 1,
+            "typeIcon": "Material",
+            "nameIcon": "email",
+            "link": ""
+        },
+        {
+            "id": 2,
+            "typeIcon": "Material",
+            "nameIcon": "facebook",
+            "link": ""
+        }
+    ]
+}
