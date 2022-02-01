@@ -108,8 +108,8 @@ export default class App extends Component {
         animationEnabled: false,
       }}
     >
-      {/* <CreateProfile.Screen name="CreateSlug" component={CreateSlug} /> */}
-      {/* <CreateProfile.Screen name="SelectTemplate" component={SelectTemplate} /> */}
+      <CreateProfile.Screen name="CreateSlug" component={CreateSlug} />
+      <CreateProfile.Screen name="SelectTemplate" component={SelectTemplate} />
       <CreateProfile.Screen
         name="EditHomeProfileScreen"
         component={EditHomeProfile}
@@ -142,10 +142,10 @@ export default class App extends Component {
               animationEnabled: false,
             }}
           >
-            {/* <RootStack.Screen name="Intro" component={this.IntroStackScreen} /> */}
-            {/* <RootStack.Screen name="Login" component={LoginScreen} /> */}
-            {/*<RootStack.Screen name="Signin" component={SigninScreen} />
-          <RootStack.Screen name="EmailVery" component={EmailVeryScreen} /> */}
+            <RootStack.Screen name="Intro" component={this.IntroStackScreen} />
+            <RootStack.Screen name="Login" component={LoginScreen} />
+            <RootStack.Screen name="Signin" component={SigninScreen} />
+            <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
             <RootStack.Screen
               name="CreateProfile"
               component={this.ProfileStackScreen}
