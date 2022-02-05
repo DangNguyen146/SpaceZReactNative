@@ -25,6 +25,12 @@ import rootReducer from "./src/redux";
 import { createStore } from "redux";
 import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import AppLoading from "expo-app-loading";
+import EditContentCenter from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentCenter";
+import EditContentDown from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentDown";
+import SelectIconImgProfile from "./src/screen/ProfileOnlineScreen/SelectIconProfile/SelectIconImgProfile";
+import SelectIconProfile from "./src/screen/ProfileOnlineScreen/SelectIconProfile/SelectIconProfile";
+import EditContentGraphisc from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentGraphisc";
 
 const IntroStack = createStackNavigator();
 const CreateProfile = createStackNavigator();
@@ -50,7 +56,7 @@ export default class App extends Component {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
-  componentDidMount() {
+  async componentDidMount() {
     this._loadFontsAsync();
   }
   createTab = () => (
@@ -108,7 +114,7 @@ export default class App extends Component {
         animationEnabled: false,
       }}
     >
-      <CreateProfile.Screen name="CreateSlug" component={CreateSlug} />
+      {/* <CreateProfile.Screen name="CreateSlug" component={CreateSlug} />
       <CreateProfile.Screen name="SelectTemplate" component={SelectTemplate} />
       <CreateProfile.Screen
         name="EditHomeProfileScreen"
@@ -117,6 +123,26 @@ export default class App extends Component {
       <CreateProfile.Screen
         name="EditContentUpScreen"
         component={EditContentUp}
+      />
+      <CreateProfile.Screen
+        name="EditContentCenterScreen"
+        component={EditContentCenter}
+      />
+      <CreateProfile.Screen
+        name="EditContentDownScreen"
+        component={EditContentDown}
+      />
+      <CreateProfile.Screen
+        name="SelectIconProfileScreen"
+        component={SelectIconProfile}
+      />
+      <CreateProfile.Screen
+        name="SelectIconImgProfileScreen"
+        component={SelectIconImgProfile}
+      /> */}
+      <CreateProfile.Screen
+        name="EditContentGraphiscScreen"
+        component={EditContentGraphisc}
       />
     </CreateProfile.Navigator>
   );
@@ -133,28 +159,35 @@ export default class App extends Component {
   );
   render() {
     const store = createStore(rootReducer, applyMiddleware(thunk));
-    return (
-      <StoreProvider store={store}>
-        <NavigationContainer>
-          <RootStack.Navigator
-            screenOptions={{
-              headerShown: false,
-              animationEnabled: false,
-            }}
-          >
-            <RootStack.Screen name="Intro" component={this.IntroStackScreen} />
-            <RootStack.Screen name="Login" component={LoginScreen} />
-            <RootStack.Screen name="Signin" component={SigninScreen} />
-            <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
-            <RootStack.Screen
-              name="CreateProfile"
-              component={this.ProfileStackScreen}
-            />
-            <RootStack.Screen name="HomeScreen" children={this.createTab} />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </StoreProvider>
-    );
+    if (this.state.fontsLoaded) {
+      return (
+        <StoreProvider store={store}>
+          <NavigationContainer>
+            <RootStack.Navigator
+              screenOptions={{
+                headerShown: false,
+                animationEnabled: false,
+              }}
+            >
+              {/* <RootStack.Screen
+                name="Intro"
+                component={this.IntroStackScreen}
+              /> */}
+              {/* <RootStack.Screen name="Login" component={LoginScreen} />
+              <RootStack.Screen name="Signin" component={SigninScreen} />
+              <RootStack.Screen name="EmailVery" component={EmailVeryScreen} /> */}
+              {/* <RootStack.Screen name="HomeScreen" children={this.createTab} /> */}
+              <RootStack.Screen
+                name="CreateProfile"
+                component={this.ProfileStackScreen}
+              />
+            </RootStack.Navigator>
+          </NavigationContainer>
+        </StoreProvider>
+      );
+    } else {
+      return <AppLoading />;
+    }
   }
 }
 

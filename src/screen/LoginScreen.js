@@ -70,7 +70,7 @@ export default class LoginScreen extends Component {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
-  componentDidMount() {
+  async componentDidMount() {
     checkInternetConnection();
     this._loadFontsAsync();
   }

@@ -1,0 +1,64 @@
+{
+    "id": 1,
+    "content": {
+        "name": "",
+        "slug": "",
+        "isPublic": "true"
+    },
+    "up": {
+        "avatarPublic": "",
+        "namePublic": "",
+        "description": ""
+    },
+    "center": [
+        {
+            "name": "AntDesign",
+            "icon": "facebook-square",
+            "size": "24",
+            "color": "black",
+            "title": "fb.com/",
+            "type": "link"
+        },
+        {
+            "name": "AntDesign",
+            "icon": "message1",
+            "size": "24",
+            "color": "black",
+            "title": "message.com/",
+            "type": "link"
+        },
+        {
+            "name": "AntDesign",
+            "icon": "phone",
+            "size": "24",
+            "color": "black",
+            "title": "+84",
+            "type": "phone"
+        },
+        {
+            "name": "MaterialIcons",
+            "icon": "email",
+            "size": "24",
+            "color": "black",
+            "title": "",
+            "type": "email"
+        }
+    ],
+    "down": [
+        {
+            "name": "AntDesign",
+            "icon": "facebook-square",
+            "size": 40,
+            "color": "black",
+            "type": "link",
+            "title": ""
+        }
+    ],
+    "graphics": {
+        "borderWidth": 2,
+        "borderRadius": 10,
+        "borderStyle": "dashed",
+        "borderColor": ""
+    },
+    "effect": ""
+}

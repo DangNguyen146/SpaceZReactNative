@@ -18,14 +18,19 @@ export default function UserInput(props) {
       <TextInput
         style={{
           width: WIDTH - 55,
-          height: 45,
+          height: props.multiline ? null : 45,
           borderColor: Color.blue,
           borderWidth: 2,
           borderRadius: 10,
           color: props.color ? Color.black : Color.white,
           padding: 10,
-          paddingLeft: props.paddingLeft ? props.paddingLeft : 45,
+          paddingLeft: props.paddingLeft
+            ? props.paddingLeft
+            : props.multiline
+            ? null
+            : 45,
         }}
+        multiline={props.multiline ? true : false}
         onChangeText={props.onChangeText}
         value={props.value}
         placeholder={props.placeholder}

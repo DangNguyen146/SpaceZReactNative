@@ -1,4 +1,9 @@
 import { combineReducers } from "redux";
-const rootReducer = combineReducers({});
+
+import contentReducer from "./../screen/ProfileOnlineScreen/CreateProfile/modules/reducer";
+
+const rootReducer = combineReducers({
+  contentReducer,
+});
 
 export default rootReducer;

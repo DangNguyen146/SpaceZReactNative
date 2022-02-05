@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+} from "react-native";
 import AppStatusBar from "../../components/AppStatusBar";
 import ToolBar from "../../components/ToolBar/ToolBar";
 import Color from "../../theme/Color";
@@ -70,81 +78,88 @@ export default class CreateSlug extends Component {
         >
           Trang đường dẫn
         </Text>
-        <View
-          style={{
-            backgroundColor: Color.white,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "BalooTamma2-Bold",
-              fontSize: 18,
-              marginBottom: 0,
-            }}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView // tự scoll khi nhập input
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            style={styles.container}
           >
-            Tên
-          </Text>
-          <View style={{ marginBottom: 5 }}>
-            <MaterialIcons
-              name="web"
-              size={24}
-              color={Color.gray}
-              style={styles.inputIcon}
-            />
-            <UserInput
-              placeholder={String.nameProfile}
-              placeholderTextColor={Color.gray}
-              value={this.state.name}
-              color="black"
-              errorMessage={this.state.nameErro}
-              onChangeText={(name) => {
-                this.setState({
-                  name,
-                });
-                this.resetState();
+            <View
+              style={{
+                backgroundColor: Color.white,
+                paddingHorizontal: 20,
+                paddingVertical: 10,
               }}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: Color.white,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            marginTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "BalooTamma2-Bold",
-              fontSize: 18,
-              marginBottom: 0,
-            }}
-          >
-            URL mặc định
-          </Text>
-          <View style={{ marginBottom: 5 }}>
-            <Text size={24} color={Color.gray} style={styles.inputIcon}>
-              SpaceZ://
-            </Text>
-            <UserInput
-              placeholder={String.placeSlugProfile}
-              placeholderTextColor={Color.gray}
-              paddingLeft={90}
-              color="black"
-              value={this.state.slug}
-              errorMessage={this.state.slugErro}
-              onChangeText={(slug) => {
-                this.setState({
-                  slug,
-                });
-                this.resetState();
+            >
+              <Text
+                style={{
+                  fontFamily: "BalooTamma2-Bold",
+                  fontSize: 18,
+                  marginBottom: 0,
+                }}
+              >
+                Tên
+              </Text>
+              <View style={{ marginBottom: 5 }}>
+                <MaterialIcons
+                  name="web"
+                  size={24}
+                  color={Color.gray}
+                  style={styles.inputIcon}
+                />
+                <UserInput
+                  placeholder={String.nameProfile}
+                  placeholderTextColor={Color.gray}
+                  value={this.state.name}
+                  color="black"
+                  errorMessage={this.state.nameErro}
+                  onChangeText={(name) => {
+                    this.setState({
+                      name,
+                    });
+                    this.resetState();
+                  }}
+                />
+              </View>
+            </View>
+            <View
+              style={{
+                backgroundColor: Color.white,
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+                marginTop: 10,
               }}
-            />
-          </View>
-        </View>
+            >
+              <Text
+                style={{
+                  fontFamily: "BalooTamma2-Bold",
+                  fontSize: 18,
+                  marginBottom: 0,
+                }}
+              >
+                URL mặc định
+              </Text>
+              <View style={{ marginBottom: 5 }}>
+                <Text size={24} color={Color.gray} style={styles.inputIcon}>
+                  SpaceZ://
+                </Text>
+                <UserInput
+                  placeholder={String.placeSlugProfile}
+                  placeholderTextColor={Color.gray}
+                  paddingLeft={90}
+                  color="black"
+                  value={this.state.slug}
+                  errorMessage={this.state.slugErro}
+                  onChangeText={(slug) => {
+                    this.setState({
+                      slug,
+                    });
+                    this.resetState();
+                  }}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
         <View
           style={{
             backgroundColor: Color.white,

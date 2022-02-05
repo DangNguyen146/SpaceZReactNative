@@ -1,6 +1,9 @@
 export const DEFAULT_RULE = {
   isRequired: true,
 };
+export const IMAGE_RULE = {
+  isImage: true,
+};
 export const USER_NAME_RULE = {
   isRequired: true,
   minLength: 4,

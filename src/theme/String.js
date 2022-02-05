@@ -47,4 +47,9 @@ export default {
 
   nameErro: "Chưa nhập tên",
   slugErro: "Chưa nhập Slug",
+
+  editName: "Nhập tên hiển thị",
+
+  avatarPublicError: "Chưa thêm ảnh avatar",
+  errornamePublic: "Chưa nhập tên",
 };

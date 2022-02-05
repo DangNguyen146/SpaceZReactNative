@@ -1,5 +1,7 @@
 {
     "id": 1,
+    "name": "",
+    "slug": "",
     "up": {
         "avatar": "",
         "name": "SpaceZ",
@@ -14,7 +16,7 @@
         "github": "",
         "email": ""
     },
-    "up": [
+    "down": [
         {
             "id": 1,
             "typeIcon": "Material",
