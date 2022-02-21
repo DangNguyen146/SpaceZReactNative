@@ -1,6 +1,6 @@
 import axios from "axios";
-//const URL = 'http://192.168.1.101/grocerystore/';
-const URL = "http://192.168.1.6:3000/api/v1/";
+import { getToken } from "../utils/LocalStorage";
+import { URL } from "./config";
 export const BASE_URL = URL;
 
 const API = async (config) => {

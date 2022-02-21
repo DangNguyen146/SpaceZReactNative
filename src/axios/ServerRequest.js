@@ -1,6 +1,7 @@
 import API, { BASE_URL } from "./API";
 import NetInfo from "@react-native-community/netinfo";
 import Toast from "react-native-simple-toast";
+import axios from "axios";
 import { getToken } from "../utils/LocalStorage";
 
 export const CategoryImage = BASE_URL + "assets/images/ProductImage/category/";
@@ -52,5 +53,15 @@ export const userRegister = async (
     data: body,
   }).then((res) => {
     return res;
+  });
+};
+const URL = "http://192.168.1.8:3000/api/v1/";
+
+export const postProfile = async (data) => {
+  const headers = {
+    token: getToken,
+  };
+  axios.post(URL + "/profile", data, { headers }).then((response) => {
+    return response.data.newUser;
   });
 };

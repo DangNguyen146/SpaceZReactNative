@@ -25,9 +25,26 @@ import rootReducer from "./src/redux";
 import { createStore } from "redux";
 import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import AppLoading from "expo-app-loading";
+import EditContentCenter from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentCenter";
+import EditContentDown from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentDown";
+import SelectIconImgProfile from "./src/screen/ProfileOnlineScreen/SelectIconProfile/SelectIconImgProfile";
+import SelectIconProfile from "./src/screen/ProfileOnlineScreen/SelectIconProfile/SelectIconProfile";
+import EditContentGraphisc from "./src/screen/ProfileOnlineScreen/CreateProfile/EditContentGraphisc";
+import Preview from "./src/screen/ProfileOnlineScreen/Preview/PreView";
+import UpdateHomeProfile from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateHomeProfile";
+import UpdateContentUp from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateContentUp";
+import UpdateContentGraphisc from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateContentGraphisc";
+import UpdateContentDown from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateContentDown";
+import UpdateContentCenter from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateContentCenter";
+import UpdateSlug from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateSlug";
+import UpdateIconProfile from "./src/screen/ProfileOnlineScreen/EditProfile/SelectIconProfileUpdate/UpdateIconProfile";
+import UpdateIconImgProfile from "./src/screen/ProfileOnlineScreen/EditProfile/SelectIconProfileUpdate/UpdateIconImgProfile";
+import * as Linking from "expo-linking";
 
 const IntroStack = createStackNavigator();
 const CreateProfile = createStackNavigator();
+const PreviewProfile = createStackNavigator();
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -44,14 +61,22 @@ let customFonts = {
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { fontsLoaded: false };
+    this.state = { fontsLoaded: false, data: null };
   }
   async _loadFontsAsync() {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
-  componentDidMount() {
+  handleDeppLinking(event) {
+    let data = Linking.parse(event.url);
+    this.setState({ data });
+  }
+  async componentDidMount() {
     this._loadFontsAsync();
+    Linking.addEventListener("url", handleDeppLinking);
+    return () => {
+      Linking.removeEventListener("url");
+    };
   }
   createTab = () => (
     <Tab.Navigator
@@ -100,6 +125,46 @@ export default class App extends Component {
       <Tab.Screen name="Setting" component={SettingScreen} />
     </Tab.Navigator>
   );
+  PreviewPrefile = () => (
+    <PreviewProfile.Navigator
+      initialRouteName="PreviewProfile"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <PreviewProfile.Screen name="PreviewProfileScreen" component={Preview} />
+      <PreviewProfile.Screen
+        name="UpdateHomeProfileScreen"
+        component={UpdateHomeProfile}
+      />
+      <PreviewProfile.Screen
+        name="UpdateContentUpScreen"
+        component={UpdateContentUp}
+      />
+      <PreviewProfile.Screen
+        name="UpdateContentGraphiscScreen"
+        component={UpdateContentGraphisc}
+      />
+      <PreviewProfile.Screen
+        name="UpdateContentDownScreen"
+        component={UpdateContentDown}
+      />
+      <PreviewProfile.Screen
+        name="UpdateContentCenterScreen"
+        component={UpdateContentCenter}
+      />
+      <PreviewProfile.Screen name="UpdateSlugScreen" component={UpdateSlug} />
+      <CreateProfile.Screen
+        name="UpdateIconProfileScreen"
+        component={UpdateIconProfile}
+      />
+      <CreateProfile.Screen
+        name="UpdateIconImgProfileScreen"
+        component={UpdateIconImgProfile}
+      />
+    </PreviewProfile.Navigator>
+  );
   ProfileStackScreen = () => (
     <CreateProfile.Navigator
       initialRouteName="CreateProfile"
@@ -118,6 +183,27 @@ export default class App extends Component {
         name="EditContentUpScreen"
         component={EditContentUp}
       />
+      <CreateProfile.Screen
+        name="EditContentCenterScreen"
+        component={EditContentCenter}
+      />
+      <CreateProfile.Screen
+        name="EditContentDownScreen"
+        component={EditContentDown}
+      />
+      <CreateProfile.Screen
+        name="SelectIconProfileScreen"
+        component={SelectIconProfile}
+      />
+      <CreateProfile.Screen
+        name="SelectIconImgProfileScreen"
+        component={SelectIconImgProfile}
+      />
+      <CreateProfile.Screen
+        name="EditContentGraphiscScreen"
+        component={EditContentGraphisc}
+      />
+      <CreateProfile.Screen name="PreviewScreen" component={Preview} />
     </CreateProfile.Navigator>
   );
   IntroStackScreen = () => (
@@ -127,34 +213,49 @@ export default class App extends Component {
         animationEnabled: false,
       }}
     >
-      <IntroStack.Screen name="SplashScreen" component={SplashScreen} />
+      <IntroStack.Screen
+        name="SplashScreen"
+        component={SplashScreen}
+        data={this.state.data}
+      />
       <IntroStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
     </IntroStack.Navigator>
   );
   render() {
     const store = createStore(rootReducer, applyMiddleware(thunk));
-    return (
-      <StoreProvider store={store}>
-        <NavigationContainer>
-          <RootStack.Navigator
-            screenOptions={{
-              headerShown: false,
-              animationEnabled: false,
-            }}
-          >
-            <RootStack.Screen name="Intro" component={this.IntroStackScreen} />
-            <RootStack.Screen name="Login" component={LoginScreen} />
-            <RootStack.Screen name="Signin" component={SigninScreen} />
-            <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
-            <RootStack.Screen
-              name="CreateProfile"
-              component={this.ProfileStackScreen}
-            />
-            <RootStack.Screen name="HomeScreen" children={this.createTab} />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </StoreProvider>
-    );
+    if (this.state.fontsLoaded) {
+      return (
+        <StoreProvider store={store}>
+          <NavigationContainer>
+            <RootStack.Navigator
+              screenOptions={{
+                headerShown: false,
+                animationEnabled: false,
+              }}
+            >
+              <RootStack.Screen
+                name="Intro"
+                component={this.IntroStackScreen}
+              />
+              <RootStack.Screen name="Login" component={LoginScreen} />
+              <RootStack.Screen name="Signin" component={SigninScreen} />
+              <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
+              <RootStack.Screen name="HomeScreen" children={this.createTab} />
+              <RootStack.Screen
+                name="PreviewProfile"
+                component={this.PreviewPrefile}
+              />
+              <RootStack.Screen
+                name="CreateProfile"
+                component={this.ProfileStackScreen}
+              />
+            </RootStack.Navigator>
+          </NavigationContainer>
+        </StoreProvider>
+      );
+    } else {
+      return <AppLoading />;
+    }
   }
 }
 

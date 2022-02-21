@@ -72,7 +72,7 @@ export default class SigninScreen extends Component {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
-  componentDidMount() {
+  async componentDidMount() {
     checkInternetConnection();
     this._loadFontsAsync();
   }
@@ -525,7 +525,7 @@ const styles = StyleSheet.create({
   },
   touchPassword: {
     position: "absolute",
-    top: 30,
+    top: 10,
     right: 17,
     zIndex: 5,
   },

@@ -56,7 +56,7 @@ export default class WelcomeScreen extends Component {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
-  componentDidMount() {
+  async componentDidMount() {
     this._loadFontsAsync();
   }
   _renderItem = ({ item }) => {

@@ -3,6 +3,8 @@ const validate = (value, rules, curent = "") => {
 
   for (let rule in rules) {
     switch (rule) {
+      case "isImage":
+        isValid = isValid && requiredImageValidator(value);
       case "minLength":
         isValid = isValid && minLengthValidator(value, rules[rule]);
         break;
@@ -45,6 +47,10 @@ const maxLengthValidator = (value, maxLength) => {
 
 const requiredValidator = (value) => {
   return value !== null && value.trim() !== "";
+};
+
+const requiredImageValidator = (value) => {
+  return value !== null;
 };
 
 const emailValidator = (value) => {

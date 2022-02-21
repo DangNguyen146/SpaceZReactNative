@@ -1,31 +1,9 @@
 {
-    "id": 1,
-    "up": {
-        "avatar": "",
-        "name": "SpaceZ",
-        "description": "description 1"
-    },
-    "center": {
-        "facebook": "",
-        "instagram": "",
-        "twitter": "",
-        "messenger": "",
-        "dev": "",
-        "github": "",
-        "email": ""
-    },
-    "up": [
-        {
-            "id": 1,
-            "typeIcon": "Material",
-            "nameIcon": "email",
-            "link": ""
-        },
-        {
-            "id": 2,
-            "typeIcon": "Material",
-            "nameIcon": "facebook",
-            "link": ""
-        }
-    ]
+    "idTemplate": 2,
+    "avatarPublic": "",
+    "description": "123",
+    "up": "",
+    "center": "[{\"color\":\"black\",\"icon\":\"facebook-square\",\"name\":\"AntDesign\",\"size\":40,\"title\":\"Ffgg\",\"type\":\"link\"},{\"color\":\"black\",\"icon\":\"facebook-with-circle\",\"name\":\"Entypo\",\"size\":40,\"title\":\"Ygghy\"},{\"color\":\"black\",\"icon\":\"phone\",\"name\":\"AntDesign\",\"size\":40,\"title\":\"Hhbbb\",\"type\":\"phone\"},{\"color\":\"black\",\"icon\":\"email-outline\",\"name\":\"MaterialCommunityIcons\",\"size\":40,\"title\":\"Vvvvv\",\"type\":\"email\"}]",
+    "down": "[{\"icon\":30,\"name\":\"duo1\",\"title\":\"Gghh\",\"type\":\"link\",},{\"icon\":31,\"name\":\"duo2\",\"title\":\"Ggggg\",\"type\":\"link\",},{\"icon\":32,\"name\":\"duo3\",\"title\":\"Fffgv\",\"type\":\"link\",},]",
+    "graphics": "[{\"alignItems\":\"center\",\"backgroundColor\":\"#000\",\"backgroundNen\":\"#FFF\",\"borderColor\":\"#000\",\"borderRadius\":50,\"borderStyle\":undefined,\"borderWidth\":2,\"colorDiscription\":\"#FFF\",\"colorIcons\":\"#FFF\",\"colorTitle\":\"#FFF\",\"infoBorder\":\"#FFF\",\"marginBottom\":10,\"paddingVertical\":10,},]"
 }

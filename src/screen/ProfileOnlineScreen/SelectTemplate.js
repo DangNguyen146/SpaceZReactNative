@@ -14,14 +14,17 @@ import ToolBar from "../../components/ToolBar/ToolBar";
 import Color from "../../theme/Color";
 import { ScrollableTabView } from "@valdio/react-native-scrollable-tabview";
 import ScrollableTabBar from "@valdio/react-native-scrollable-tabview/lib/ScrollableTabBar";
+import { AddContent } from "./CreateProfile/modules/action";
+import { connect } from "react-redux";
 
 const { width: WIDTH } = Dimensions.get("window");
-export default class SelectTemplate extends Component {
+class SelectTemplate extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   render() {
+    const name = this.props.route.params.name;
     const slug = this.props.route.params.slug;
     return (
       <>
@@ -52,7 +55,10 @@ export default class SelectTemplate extends Component {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
+                  let data = { name: name, slug: slug, idTemplate: 0 };
+                  this.props.addContent(data);
                   this.props.navigation.navigate("EditHomeProfileScreen", {
+                    name: name,
                     slug: slug,
                     idTemplate: 0,
                   });
@@ -110,10 +116,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "flex-start", // if you want to fill rows left to right
+    alignItems: "flex-start",
   },
   item: {
-    width: "48%", // is 50% of container width
+    width: "48%",
     padding: 4,
     margin: 4,
     alignItems: "center",
@@ -124,3 +130,12 @@ const styles = StyleSheet.create({
     height: 300,
   },
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addContent: (data) => {
+      dispatch(AddContent(data));
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(SelectTemplate);

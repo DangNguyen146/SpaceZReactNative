@@ -1,4 +1,11 @@
 import { combineReducers } from "redux";
-const rootReducer = combineReducers({});
+
+import contentReducer from "./../screen/ProfileOnlineScreen/CreateProfile/modules/reducer";
+import contentReducerEdit from "../screen/ProfileOnlineScreen/EditProfile/modules/reducer";
+
+const rootReducer = combineReducers({
+  contentReducer,
+  contentReducerEdit,
+});
 
 export default rootReducer;

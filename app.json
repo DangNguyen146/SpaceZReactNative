@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "myapp",
     "name": "SpaceZReactNative",
     "slug": "SpaceZReactNative",
     "version": "1.0.0",
