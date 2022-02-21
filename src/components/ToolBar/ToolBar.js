@@ -73,12 +73,14 @@ function ToolBar(props) {
             )}
           </TouchableOpacity>
         ) : null}
-        <Text style={styles.toolbarTitle}>{props.title}</Text>
+        {/* <Text style={styles.toolbarTitle}>{props.title}</Text> */}
         <View style={styles.center}>
+          <Image style={styles.logoImage}  source={require("../../assets/images/logo/logo-image.png")} />
           <Image
             style={styles.logo}
             source={require("../../assets/images/logo/logo-text.png")}
           />
+         <Feather name="shopping-cart" size={24} color="white" style={{marginRight:4}} />
         </View>
       </LinearGradient>
       <View

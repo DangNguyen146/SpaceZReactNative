@@ -1,7 +1,7 @@
 import axios from "axios";
 //const URL = 'http://192.168.1.101/grocerystore/';
-const URL = "http://192.168.1.6:3000/api/v1/";
-export const BASE_URL = URL;
+const URL = "https://nt118.herokuapp.com/api/v1/";
+ const BASE_URL = URL;
 
 const API = async (config) => {
   axios.interceptors.response.use(
@@ -24,4 +24,7 @@ const API = async (config) => {
   config.baseURL = URL;
   return axios(config);
 };
-export default API;
+const mainApi=axios.create({
+  baseURL:"https://nt118.herokuapp.com/api/v1/",
+})
+export  {API,mainApi,BASE_URL};

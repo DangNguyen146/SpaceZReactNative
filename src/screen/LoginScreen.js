@@ -99,6 +99,7 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate("HomeScreen");
   }
   login = () => {
+    console.log("run login");
     const { email, emailError, password, passwordError } = this.state;
     if (!Validator(email, DEFAULT_RULE)) {
       this.setState({
@@ -122,6 +123,7 @@ export default class LoginScreen extends Component {
     userLogin(email, password)
       .then((response) => {
         let data = response.data;
+        console.log(data);
         if (data) {
           this.showToast(data.mess);
           setUserDetails(data);
@@ -132,7 +134,9 @@ export default class LoginScreen extends Component {
         this.setState({ loading: false });
       })
       .catch((error) => {
+        // console.log("loi");
         console.log(error);
+        // this.props.navigation.replace("HomeScreen");
       });
   };
   render() {

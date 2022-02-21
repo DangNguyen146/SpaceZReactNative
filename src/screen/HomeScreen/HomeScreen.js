@@ -1,19 +1,50 @@
-import React, { Component } from "react";
-import { View, Text } from "react-native";
+import React, { useEffect } from 'react'
+import {View,Text,StyleSheet,ScrollView} from 'react-native';
+import AllCategory from '../../components/AllCategory/AllCategory';
+import AppStatusBar from '../../components/AppStatusBar';
+import HeaderContainer from '../../components/HeaderContainer/HeaderContainer';
+import NewProduct from '../../components/NewProduct/NewProduct';
+import ToolBar from '../../components/ToolBar/ToolBar'; 
+import {useDispatch, useSelector} from "react-redux";
+import { actListProductApi } from './Modules/action';
 
-export default class HomeScreen extends Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        <Text>Home</Text>
-      </View>
-    );
-  }
+export default function HomeScreen() {
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    console.log("run use eff");
+      dispatch(actListProductApi());
+  },[]);
+  const listProductData=useSelector(state=>state.productReducer.data)
+ 
+  
+
+ 
+  return (
+    <View style={styles.screen}  > 
+      
+        <HeaderContainer/>
+  
+        <AllCategory/>
+        
+       
+       <NewProduct products={listProductData} />
+
+       
+           
+          
+        
+        
+        
+        
+     
+        
+       
+        
+    </View>
+  )
 }
+const styles=StyleSheet.create({
+  screen:{
+    backgroundColor:"#dcdcdc"
+  }
+})

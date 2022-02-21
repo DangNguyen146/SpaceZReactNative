@@ -2,6 +2,15 @@ import { StyleSheet } from "react-native";
 import Colors from "../../theme/Color";
 import Dimensions from "../../theme/Dimension";
 export const styles = StyleSheet.create({
+  logoImage:{
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height:50,
+    resizeMode: "contain",
+    marginLeft:2,
+    
+  },
   logo: {
     justifyContent: "center",
     alignItems: "center",
@@ -14,8 +23,9 @@ export const styles = StyleSheet.create({
   },
   center: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    flexDirection:"row"
   },
   toolbarTitle: {
     fontSize: 20,

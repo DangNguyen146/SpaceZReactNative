@@ -1,4 +1,4 @@
-import API, { BASE_URL } from "./API";
+import  { API,BASE_URL} from "./API";
 import NetInfo from "@react-native-community/netinfo";
 import Toast from "react-native-simple-toast";
 import { getToken } from "../utils/LocalStorage";
@@ -19,6 +19,7 @@ export const checkInternetConnection = () => {
 };
 
 export const userLogin = async (email, password) => {
+  console.log(email);
   const body = {
     email: email,
     password: password,
@@ -29,6 +30,9 @@ export const userLogin = async (email, password) => {
     data: body,
   }).then((res) => {
     return res;
+  }).catch((err)=>{
+    console.log(err);
+
   });
 };
 
