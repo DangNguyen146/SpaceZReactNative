@@ -19,7 +19,7 @@ export default function UserInput(props) {
         style={{
           width: WIDTH - 55,
           height: props.multiline ? null : 45,
-          borderColor: Color.blue,
+          borderColor: props.borderColor ? props.borderColor : Color.blue,
           borderWidth: 2,
           borderRadius: 10,
           color: props.color ? Color.black : Color.white,

@@ -22,18 +22,22 @@ import Axios from "axios";
 import { URL } from "../../../axios/config";
 import { getToken } from "../../../utils/LocalStorage";
 import {
-  RemoveContent,
-  RemoveGraphicsNen,
-  RemoveProfileCenter,
-  RemoveProfileDown,
-  RemoveProfileUp,
+  RemoveContentEdit,
+  RemoveGraphicsNenEdit,
+  RemoveProfileCenterEdit,
+  RemoveProfileDownEdit,
+  RemoveProfileUpEdit,
 } from "./modules/action";
 
 const { width: WIDTH } = Dimensions.get("window");
 
-class EditHomeProfile extends Component {
+class UpdateHomeProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
-    const dataProfile = this.props.dataProfile;
     const dataProfleUp = this.props.dataProfleUp;
     const datastyleGraphics = this.props.graphicsNen;
     const renderDataProfileUp = () => {
@@ -105,7 +109,6 @@ class EditHomeProfile extends Component {
         );
       });
     };
-    const styleGraphics = this.props.graphicsNen;
     return (
       <View
         style={{
@@ -140,7 +143,7 @@ class EditHomeProfile extends Component {
             marginBottom: 10,
           }}
           onPress={() => {
-            this.props.navigation.navigate("EditContentUpScreen");
+            this.props.navigation.navigate("UpdateContentUpScreen");
           }}
         >
           {dataProfleUp && dataProfleUp.namePublic ? (
@@ -189,7 +192,7 @@ class EditHomeProfile extends Component {
             marginBottom: 10,
           }}
           onPress={() => {
-            this.props.navigation.navigate("EditContentCenterScreen");
+            this.props.navigation.navigate("UpdateContentCenterScreen");
           }}
         >
           <View
@@ -249,7 +252,7 @@ class EditHomeProfile extends Component {
             marginBottom: 10,
           }}
           onPress={() => {
-            this.props.navigation.navigate("EditContentDownScreen");
+            this.props.navigation.navigate("UpdateContentDownScreen");
           }}
         >
           {this.props.dataProfileDown && this.props.dataProfileDown[0] ? (
@@ -270,7 +273,7 @@ class EditHomeProfile extends Component {
                   keyboardType="email-address"
                   editable={false}
                   selectTextOnFocus={false}
-                  borderColor={this.state.datastyleGraphics[0].infoBorder}
+                  borderColor={datastyleGraphics[0].infoBorder}
                 />
               </View>
               <View style={styles.textInputContainer}>
@@ -287,7 +290,7 @@ class EditHomeProfile extends Component {
                   keyboardType="email-address"
                   editable={false}
                   selectTextOnFocus={false}
-                  borderColor={this.state.datastyleGraphics[0].infoBorder}
+                  borderColor={datastyleGraphics[0].infoBorder}
                 />
               </View>
               <View style={styles.textInputContainer}>
@@ -304,7 +307,7 @@ class EditHomeProfile extends Component {
                   keyboardType="email-address"
                   editable={false}
                   selectTextOnFocus={false}
-                  borderColor={this.state.datastyleGraphics[0].infoBorder}
+                  borderColor={datastyleGraphics[0].infoBorder}
                 />
               </View>
             </>
@@ -322,6 +325,7 @@ class EditHomeProfile extends Component {
             let data = {
               name: this.props.dataProfile.name,
               slug: this.props.dataProfile.slug,
+              status: this.props.dataProfile.status,
               idTemplate: this.props.dataProfile.idTemplate,
               avatarPublic: this.props.dataProfleUp.avatarPublic,
               description: this.props.dataProfleUp.description,
@@ -333,15 +337,15 @@ class EditHomeProfile extends Component {
             };
             const token = await getToken();
             Axios({
-              url: URL + "profile",
+              url: URL + "profile/" + this.props.id,
               headers: {
                 token: token,
               },
               data: data,
-              method: "POST",
+              method: "PUT",
             })
               .then((result) => {
-                this.props.removeContent();
+                // this.props.removeContent();
                 this.props.navigation.navigate("Profile");
               })
               .catch((err) => {
@@ -357,7 +361,7 @@ class EditHomeProfile extends Component {
           <TouchableOpacity
             style={styles.contentDown}
             onPress={() => {
-              this.props.navigation.navigate("EditContentGraphiscScreen");
+              this.props.navigation.navigate("UpdateContentGraphiscScreen");
             }}
           >
             <FontAwesome5
@@ -368,14 +372,19 @@ class EditHomeProfile extends Component {
             />
             <Text>Chỉnh nền</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.contentDown}>
+          <TouchableOpacity
+            style={styles.contentDown}
+            onPress={() => {
+              this.props.navigation.navigate("UpdateSlugScreen");
+            }}
+          >
             <Ionicons
               name="flash-sharp"
               size={24}
               color="#FFE600"
               style={styles.iconDown}
             />
-            <Text>Chỉnh hiệu ứng</Text>
+            <Text>Chỉnh slug</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -471,22 +480,23 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    dataProfile: state.contentReducer.dataProfile,
-    dataProfleUp: state.contentReducer.dataProfleUp,
-    dataProfleCenter: state.contentReducer.dataProfleCenter,
-    dataProfileDown: state.contentReducer.dataProfileDown,
-    graphicsNen: state.contentReducer.graphicsNen,
+    id: state.contentReducerEdit.id,
+    dataProfile: state.contentReducerEdit.dataProfile,
+    dataProfleUp: state.contentReducerEdit.dataProfleUp,
+    dataProfleCenter: state.contentReducerEdit.dataProfleCenter,
+    dataProfileDown: state.contentReducerEdit.dataProfileDown,
+    graphicsNen: state.contentReducerEdit.graphicsNen,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     removeContent: () => {
-      dispatch(RemoveContent());
-      dispatch(RemoveProfileUp());
-      dispatch(RemoveProfileCenter());
-      dispatch(RemoveProfileDown());
-      dispatch(RemoveGraphicsNen());
+      dispatch(RemoveContentEdit());
+      dispatch(RemoveProfileUpEdit());
+      dispatch(RemoveProfileCenterEdit());
+      dispatch(RemoveProfileDownEdit());
+      dispatch(RemoveGraphicsNenEdit());
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(EditHomeProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateHomeProfile);

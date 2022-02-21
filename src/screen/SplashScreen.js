@@ -1,28 +1,27 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Color from "../theme/Color";
+import LottieView from "lottie-react-native";
 
 export default class SplashScreen extends Component {
-  performTimeConsumingTask = async () => {
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve("result");
-      }, 3000)
-    );
-  };
   async componentDidMount() {
-    this.props.navigation.replace("WelcomeScreen");
+    console.log(this.props.route.params.data);
   }
   render() {
     return (
       <View style={styles.custom}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/images/logo/Logo.png")}
+        <LottieView
+          autoPlay
+          loop={false}
+          source={require("../assets/images/intro/intro.json")}
+          onAnimationFinish={() => {
+            return new Promise((resolve) =>
+              setTimeout(() => {
+                this.props.navigation.replace("WelcomeScreen");
+              }, 100)
+            );
+          }}
         />
-        <View style={styles.text}>
-          <Text>Thẻ cá nhân thông minh</Text>
-        </View>
       </View>
     );
   }
@@ -34,14 +33,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Color.white,
-  },
-  logo: {
-    height: 250,
-    width: 250,
-    resizeMode: "contain",
-  },
-  text: {
-    fontSize: 20,
-    textAlign: "center",
   },
 });

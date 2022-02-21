@@ -3,14 +3,19 @@ import { ICONS_DATA } from "../../data/base/BaseIcons";
 import { LOGOS_DATA } from "../../data/base/BaseLogo";
 
 const sateDefault = {
+  id: null,
   dataProfile: {},
   dataProfleUp: {},
   dataProfleCenter: ICONS_DATA,
   dataProfileDown: LOGOS_DATA,
   graphicsNen: GRAPHICS_NEN,
 };
-const contentReducer = (state = sateDefault, action) => {
+const contentReducerEdit = (state = sateDefault, action) => {
   switch (action.type) {
+    case "ADD_ID": {
+      state.id = action.id;
+      return { ...state };
+    }
     case "ADD_CONTENT": {
       state.dataProfile = action.data;
       return { ...state };
@@ -32,7 +37,7 @@ const contentReducer = (state = sateDefault, action) => {
       return { ...state };
     }
     case "REMOVE_PROFILE_CENTER": {
-      state.dataProfleCenter = ICONS_DATA;
+      state.dataProfleCenter = null;
       return { ...state };
     }
     case "REMOVE_ITEM_PROFILE_CENTER": {
@@ -64,7 +69,7 @@ const contentReducer = (state = sateDefault, action) => {
       return { ...state };
     }
     case "REMOVE_PROFILE_DOWN": {
-      state.dataProfileDown = LOGOS_DATA;
+      state.dataProfileDown = null;
       return { ...state };
     }
     case "REMOVE_ITEM_PROFILE_DOWN": {
@@ -85,7 +90,6 @@ const contentReducer = (state = sateDefault, action) => {
       state.dataProfileDown = dataProfileDownUpdate;
       return { ...state };
     }
-
     case "EDIT_ICON_PROFILE_DOWN": {
       let dataProfileDownUpdate = [...state.dataProfileDown];
       dataProfileDownUpdate[action.index] = action.item;
@@ -148,4 +152,4 @@ const contentReducer = (state = sateDefault, action) => {
   }
 };
 
-export default contentReducer;
+export default contentReducerEdit;

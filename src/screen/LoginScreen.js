@@ -48,8 +48,6 @@ import {
 import UserInput from "../components/UserInput/UserInput";
 import String from "../theme/String";
 import { setUserDetails } from "../utils/LocalStorage";
-import axios from "axios";
-import { url } from "../utils/config/URL";
 
 const { width: WIDTH } = Dimensions.get("window");
 
@@ -99,27 +97,28 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate("HomeScreen");
   }
   login = () => {
-    const { email, emailError, password, passwordError } = this.state;
-    if (!Validator(email, DEFAULT_RULE)) {
-      this.setState({
-        emailError: String.emailError,
-      });
-      return;
-    }
-    if (!Validator(email, EMAIL_RULE)) {
-      this.setState({
-        emailError: String.emailError1,
-      });
-      return;
-    }
-    if (!Validator(password, DEFAULT_RULE)) {
-      this.setState({
-        passwordError: String.passwordError,
-      });
-      return;
-    }
+    // const { email, emailError, password, passwordError } = this.state;
+    // if (!Validator(email, DEFAULT_RULE)) {
+    //   this.setState({
+    //     emailError: String.emailError,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(email, EMAIL_RULE)) {
+    //   this.setState({
+    //     emailError: String.emailError1,
+    //   });
+    //   return;
+    // }
+    // if (!Validator(password, DEFAULT_RULE)) {
+    //   this.setState({
+    //     passwordError: String.passwordError,
+    //   });
+    //   return;
+    // }
     this.setState({ loading: true });
-    userLogin(email, password)
+    // userLogin(email, password)
+    userLogin("19521317@gm.uit.edu.vn", "1234")
       .then((response) => {
         let data = response.data;
         if (data) {
@@ -405,7 +404,7 @@ const styles = StyleSheet.create({
   },
   touchPassword: {
     position: "absolute",
-    top: 30,
+    top: 10,
     right: 17,
     zIndex: 5,
   },

@@ -24,6 +24,7 @@ class SelectTemplate extends Component {
     this.state = {};
   }
   render() {
+    const name = this.props.route.params.name;
     const slug = this.props.route.params.slug;
     return (
       <>
@@ -54,9 +55,10 @@ class SelectTemplate extends Component {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  let data = { slug: slug, idTemplate: 0 };
+                  let data = { name: name, slug: slug, idTemplate: 0 };
                   this.props.addContent(data);
                   this.props.navigation.navigate("EditHomeProfileScreen", {
+                    name: name,
                     slug: slug,
                     idTemplate: 0,
                   });

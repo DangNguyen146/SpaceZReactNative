@@ -20,10 +20,10 @@ import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import Validator from "../../../utils/Validator/Validator";
 import { IMAGE_RULE, DEFAULT_RULE } from "../../../utils/Validator/rule";
-import { AddProfileUp } from "./modules/action";
+import { AddProfileUpEdit } from "./modules/action";
 import { connect } from "react-redux";
 
-class EditContentUp extends Component {
+class UpdateContentUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,7 +76,7 @@ class EditContentUp extends Component {
     }
     let data = { avatarPublic, namePublic, description };
     this.props.addContentUp(data);
-    this.props.navigation.navigate("EditHomeProfileScreen");
+    this.props.navigation.navigate("UpdateHomeProfileScreen");
   };
   async componentDidMount() {
     const dataProfleUp = this.props.dataProfleUp;
@@ -291,14 +291,14 @@ const imageUploaderStyles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
   return {
-    dataProfleUp: state.contentReducer.dataProfleUp,
+    dataProfleUp: state.contentReducerEdit.dataProfleUp,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     addContentUp: (data) => {
-      dispatch(AddProfileUp(data));
+      dispatch(AddProfileUpEdit(data));
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(EditContentUp);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateContentUp);

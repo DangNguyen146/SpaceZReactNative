@@ -3,7 +3,7 @@
     "content": {
         "name": "",
         "slug": "",
-        "isPublic": "true"
+        "status": "true"
     },
     "up": {
         "avatarPublic": "",
@@ -54,7 +54,7 @@
             "title": ""
         }
     ],
-    "graphics": {
+    "graphicsNen": {
         "borderWidth": 2,
         "borderRadius": 10,
         "borderStyle": "dashed",

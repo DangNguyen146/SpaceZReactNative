@@ -1,3 +1,4 @@
+export const ADD_ID = "ADD_ID";
 export const ADD_CONTENT = "ADD_CONTENT";
 export const REMOVE_CONTENT = "REMOVE_CONTENT";
 export const ADD_PROFILE_UP = "ADD_PROFILE_UP";

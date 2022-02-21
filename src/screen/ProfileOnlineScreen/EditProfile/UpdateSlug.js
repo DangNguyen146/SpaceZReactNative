@@ -8,26 +8,28 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from "react-native";
-import AppStatusBar from "../../components/AppStatusBar";
-import ToolBar from "../../components/ToolBar/ToolBar";
-import Color from "../../theme/Color";
+import AppStatusBar from "../../../components/AppStatusBar";
+import ToolBar from "../../../components/ToolBar/ToolBar";
+import Color from "../../../theme/Color";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import UserInput from "../../components/UserInput/UserInput";
-import String from "../../theme/String";
+import UserInput from "../../../components/UserInput/UserInput";
+import String from "../../../theme/String";
 import { MaterialIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
-import LoadingButton from "../../components/LoadingButton";
-import Validator from "../../utils/Validator/Validator";
+import LoadingButton from "../../../components/LoadingButton";
+import Validator from "../../../utils/Validator/Validator";
 import {
   DEFAULT_RULE,
   EMAIL_RULE,
   USER_NAME_RULE,
   PASSWORD_RULE,
   NAME_RULE,
-} from "../../utils/Validator/rule";
+} from "../../../utils/Validator/rule";
+import { AddContentEdit } from "./modules/action";
+import { connect } from "react-redux";
 const { width: WIDTH } = Dimensions.get("window");
 
-export default class CreateSlug extends Component {
+class UpdateSlug extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +40,13 @@ export default class CreateSlug extends Component {
       status: "true",
     };
   }
+  async componentDidMount() {
+    this.setState({
+      name: this.props.dataProfile.name,
+      slug: this.props.dataProfile.slug,
+      status: this.props.dataProfile.status,
+    });
+  }
   resetState = () => {
     this.setState({
       nameErro: "",
@@ -45,7 +54,7 @@ export default class CreateSlug extends Component {
     });
   };
   createProfile = () => {
-    const { name, nameErro, slug, slugErro } = this.state;
+    const { name, nameErro, slug, slugErro, status } = this.state;
     if (!Validator(name, DEFAULT_RULE)) {
       this.setState({
         nameErro: String.nameErro,
@@ -58,10 +67,9 @@ export default class CreateSlug extends Component {
       });
       return;
     }
-    this.props.navigation.navigate("SelectTemplate", {
-      name: this.state.name,
-      slug: this.state.slug,
-    });
+    let data = { name: name, slug: slug, status: status, idTemplate: null };
+    this.props.addContent(data);
+    this.props.navigation.navigate("UpdateHomeProfileScreen");
   };
   render() {
     return (
@@ -233,3 +241,16 @@ const styles = StyleSheet.create({
     left: 10,
   },
 });
+const mapStateToProps = (state) => {
+  return {
+    dataProfile: state.contentReducerEdit.dataProfile,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addContent: (data) => {
+      dispatch(AddContentEdit(data));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateSlug);

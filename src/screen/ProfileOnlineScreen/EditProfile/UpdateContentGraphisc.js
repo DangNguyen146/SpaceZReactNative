@@ -28,11 +28,11 @@ import {
 } from "../data/base/BaseGraphics";
 import Rectangle from "../../../components/RenderGraphics/Rectangle";
 import Ellipse from "../../../components/RenderGraphics/Ellipse";
-import { AddGraphicsNen, AddGraphicsNenColor } from "./modules/action";
+import { AddGraphicsNenEdit, AddGraphicsNenColorEdit } from "./modules/action";
 
 const { width: WIDTH } = Dimensions.get("window");
 
-class EditContentGraphisc extends Component {
+class UpdateContentGraphisc extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -489,10 +489,10 @@ class EditContentGraphisc extends Component {
         <TouchableOpacity
           style={styles.contentButtonDeploy}
           onPress={() => {
-            this.props.navigation.navigate("EditHomeProfileScreen");
+            this.props.navigation.navigate("UpdateHomeProfileScreen");
           }}
-          >
-            <Text style={{ color: Color.white, fontFamily: "BalooTamma2-Bold" }}>
+        >
+          <Text style={{ color: Color.white, fontFamily: "BalooTamma2-Bold" }}>
             Lưu
           </Text>
         </TouchableOpacity>
@@ -597,24 +597,24 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
   return {
-    dataProfile: state.contentReducer.dataProfile,
-    dataProfleUp: state.contentReducer.dataProfleUp,
-    dataProfleCenter: state.contentReducer.dataProfleCenter,
-    dataProfileDown: state.contentReducer.dataProfileDown,
-    graphicsNen: state.contentReducer.graphicsNen,
+    dataProfile: state.contentReducerEdit.dataProfile,
+    dataProfleUp: state.contentReducerEdit.dataProfleUp,
+    dataProfleCenter: state.contentReducerEdit.dataProfleCenter,
+    dataProfileDown: state.contentReducerEdit.dataProfileDown,
+    graphicsNen: state.contentReducerEdit.graphicsNen,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     addGraphicsNen: (data) => {
-      dispatch(AddGraphicsNen(data));
+      dispatch(AddGraphicsNenEdit(data));
     },
     addGraphicsNenColor: (name, data) => {
-      dispatch(AddGraphicsNenColor(name, data));
+      dispatch(AddGraphicsNenColorEdit(name, data));
     },
   };
 };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditContentGraphisc);
+)(UpdateContentGraphisc);

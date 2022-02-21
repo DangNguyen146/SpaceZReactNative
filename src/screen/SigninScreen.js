@@ -525,7 +525,7 @@ const styles = StyleSheet.create({
   },
   touchPassword: {
     position: "absolute",
-    top: 30,
+    top: 10,
     right: 17,
     zIndex: 5,
   },
