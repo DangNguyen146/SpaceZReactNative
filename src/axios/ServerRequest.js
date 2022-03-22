@@ -3,6 +3,7 @@ import NetInfo from "@react-native-community/netinfo";
 import Toast from "react-native-simple-toast";
 import axios from "axios";
 import { getToken } from "../utils/LocalStorage";
+import { URL } from "./config";
 
 export const CategoryImage = BASE_URL + "assets/images/ProductImage/category/";
 export const ProductImage = BASE_URL + "assets/images/ProductImage/product/";
@@ -55,7 +56,6 @@ export const userRegister = async (
     return res;
   });
 };
-const URL = "http://192.168.1.8:3000/api/v1/";
 
 export const postProfile = async (data) => {
   const headers = {

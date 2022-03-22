@@ -29,21 +29,18 @@ const slides = [
     title: String.sliderTitle1,
     text: String.sliderTitle1_des,
     image: require("../assets/images/intro/background2.png"),
-    imageDes: require("../assets/images/intro/slide1.png"),
   },
   {
     key: 2,
     title: String.sliderTitle2,
     text: "",
     image: require("../assets/images/intro/background3.png"),
-    imageDes: require("../assets/images/intro/slide2.png"),
   },
   {
     key: 3,
     title: String.sliderTitle3,
     text: "",
     image: require("../assets/images/intro/background4.png"),
-    imageDes: require("../assets/images/intro/slide3.png"),
   },
 ];
 

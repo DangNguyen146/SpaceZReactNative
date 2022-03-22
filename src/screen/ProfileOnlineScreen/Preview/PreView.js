@@ -91,7 +91,7 @@ class PreView extends Component {
     });
   };
   renderDataProfileDown = () => {
-    console.log(this.state.dataProfileDown);
+    // console.log(this.state.dataProfileDown);
     return this.state.dataProfileDown.map((item, index) => {
       return (
         <View style={styles.textInputContainer}>

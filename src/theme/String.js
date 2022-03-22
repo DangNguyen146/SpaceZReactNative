@@ -52,4 +52,9 @@ export default {
 
   avatarPublicError: "Chưa thêm ảnh avatar",
   errornamePublic: "Chưa nhập tên",
+
+  createCard: "Tạo thẻ cá nhân",
+  qr: "Nhập qr",
+  addressProfile: "Nhập địa chỉ",
+  addressErro: "Chưa nhập địa chỉ",
 };

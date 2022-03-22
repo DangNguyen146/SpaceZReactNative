@@ -41,11 +41,22 @@ import UpdateSlug from "./src/screen/ProfileOnlineScreen/EditProfile/UpdateSlug"
 import UpdateIconProfile from "./src/screen/ProfileOnlineScreen/EditProfile/SelectIconProfileUpdate/UpdateIconProfile";
 import UpdateIconImgProfile from "./src/screen/ProfileOnlineScreen/EditProfile/SelectIconProfileUpdate/UpdateIconImgProfile";
 import * as Linking from "expo-linking";
+import CreateNameCard from "./src/screen/HomeScreen/CreateNameCard";
+import HomeCreate from "./src/screen/HomeScreen/CreateCard/HomeCreateMT";
+import HomeCreateMT from "./src/screen/HomeScreen/CreateCard/HomeCreateMT";
+import HomeCreateMS from "./src/screen/HomeScreen/CreateCard/HomeCreateMS";
+import ViewCardItem from "./src/screen/HomeScreen/EditCard/ViewCardItem";
+import HomeEditMT from "./src/screen/HomeScreen/EditCard/HomeEditMT";
+import HomeEditMS from "./src/screen/HomeScreen/EditCard/HomeEditMS";
+import ViewCardPublic from "./src/screen/HomeScreen/ViewCardPublic/ViewCardPublic";
+import OrderScreen from "./src/screen/OrderScreen/OrderScreen";
 
 const IntroStack = createStackNavigator();
 const CreateProfile = createStackNavigator();
 const PreviewProfile = createStackNavigator();
 const RootStack = createStackNavigator();
+const CreateCard = createStackNavigator();
+const EditCard = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 global.currentScreenIndex = 0;
@@ -124,6 +135,37 @@ export default class App extends Component {
       <Tab.Screen name="Mess" component={SendMessScreen} />
       <Tab.Screen name="Setting" component={SettingScreen} />
     </Tab.Navigator>
+  );
+  HomeCreateCard = () => (
+    <CreateCard.Navigator
+      initialRouteName="CreateCard"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <CreateCard.Screen
+        name="CreateNameCardScreen"
+        component={CreateNameCard}
+      />
+      <CreateCard.Screen name="CreateCardMTScreen" component={HomeCreateMT} />
+      <CreateCard.Screen name="CreateCardMSScreen" component={HomeCreateMS} />
+      {/* <CreateCard.Screen name="ViewCardItemScreen" component={ViewCardItem} /> */}
+    </CreateCard.Navigator>
+  );
+  HomeEditCard = () => (
+    <EditCard.Navigator
+      initialRouteName="ViewCard"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <EditCard.Screen name="ViewCardScreen" component={ViewCardItem} />
+      <EditCard.Screen name="EditCardMTScreen" component={HomeEditMT} />
+      <EditCard.Screen name="EditCardMSScreen" component={HomeEditMS} />
+      <EditCard.Screen name="OrderScreen" component={OrderScreen} />
+    </EditCard.Navigator>
   );
   PreviewPrefile = () => (
     <PreviewProfile.Navigator
@@ -233,14 +275,22 @@ export default class App extends Component {
                 animationEnabled: false,
               }}
             >
-              <RootStack.Screen
+              {/* <RootStack.Screen
                 name="Intro"
                 component={this.IntroStackScreen}
               />
               <RootStack.Screen name="Login" component={LoginScreen} />
               <RootStack.Screen name="Signin" component={SigninScreen} />
-              <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
+              <RootStack.Screen name="EmailVery" component={EmailVeryScreen} /> */}
+
               <RootStack.Screen name="HomeScreen" children={this.createTab} />
+
+              <RootStack.Screen
+                name="CreateCard"
+                component={this.HomeCreateCard}
+              />
+
+              <RootStack.Screen name="ViewCard" component={this.HomeEditCard} />
               <RootStack.Screen
                 name="PreviewProfile"
                 component={this.PreviewPrefile}
