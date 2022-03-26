@@ -50,9 +50,12 @@ import HomeEditMT from "./src/screen/HomeScreen/EditCard/HomeEditMT";
 import HomeEditMS from "./src/screen/HomeScreen/EditCard/HomeEditMS";
 import ViewCardPublic from "./src/screen/HomeScreen/ViewCardPublic/ViewCardPublic";
 import OrderScreen from "./src/screen/OrderScreen/OrderScreen";
+import ViewCardItemSocail from "./src/screen/NFCScreen/ViewCardItem/ViewCardItemSocail";
+import OrderViewSocial from "./src/screen/NFCScreen/OrderViewSocial/OrderViewSocial";
 
 const IntroStack = createStackNavigator();
 const CreateProfile = createStackNavigator();
+const SocaialScreen = createStackNavigator();
 const PreviewProfile = createStackNavigator();
 const RootStack = createStackNavigator();
 const CreateCard = createStackNavigator();
@@ -150,7 +153,6 @@ export default class App extends Component {
       />
       <CreateCard.Screen name="CreateCardMTScreen" component={HomeCreateMT} />
       <CreateCard.Screen name="CreateCardMSScreen" component={HomeCreateMS} />
-      {/* <CreateCard.Screen name="ViewCardItemScreen" component={ViewCardItem} /> */}
     </CreateCard.Navigator>
   );
   HomeEditCard = () => (
@@ -207,6 +209,25 @@ export default class App extends Component {
       />
     </PreviewProfile.Navigator>
   );
+  SocaialStackScreen = () => (
+    <SocaialScreen.Navigator
+      initialRouteName="DetaileCard"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <SocaialScreen.Screen
+        name="ViewCardItemScreen"
+        component={ViewCardItemSocail}
+      />
+      <SocaialScreen.Screen
+        name="OrderViewSocial"
+        component={OrderViewSocial}
+      />
+    </SocaialScreen.Navigator>
+  );
+
   ProfileStackScreen = () => (
     <CreateProfile.Navigator
       initialRouteName="CreateProfile"
@@ -275,13 +296,13 @@ export default class App extends Component {
                 animationEnabled: false,
               }}
             >
-              {/* <RootStack.Screen
+              <RootStack.Screen
                 name="Intro"
                 component={this.IntroStackScreen}
               />
               <RootStack.Screen name="Login" component={LoginScreen} />
               <RootStack.Screen name="Signin" component={SigninScreen} />
-              <RootStack.Screen name="EmailVery" component={EmailVeryScreen} /> */}
+              <RootStack.Screen name="EmailVery" component={EmailVeryScreen} />
 
               <RootStack.Screen name="HomeScreen" children={this.createTab} />
 
@@ -294,6 +315,10 @@ export default class App extends Component {
               <RootStack.Screen
                 name="PreviewProfile"
                 component={this.PreviewPrefile}
+              />
+              <RootStack.Screen
+                name="ViewCardSocial"
+                component={this.SocaialStackScreen}
               />
               <RootStack.Screen
                 name="CreateProfile"

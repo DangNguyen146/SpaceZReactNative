@@ -61,7 +61,7 @@ class BackgroundMT extends Component {
     // console.log(_image);
     if (!_image.cancelled) {
       this.setState({
-        backgroundCard: _image.uri,
+        backgroundCard: _image,
       });
     }
   };
@@ -163,7 +163,7 @@ class BackgroundMT extends Component {
             <View style={imageUploaderStyles.container}>
               {this.state.backgroundCard && (
                 <Image
-                  source={{ uri: this.state.backgroundCard }}
+                  source={{ uri: this.state.backgroundCard.uri }}
                   style={{ width: 135, height: 87 }}
                 />
               )}

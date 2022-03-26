@@ -16,6 +16,8 @@ import listQrCreateMSReducer from "../container/CreateCardScreenMS/QrCard/module
 import listNameCardCreateMSReducer from "../screen/HomeScreen/modules/reducer";
 import listCardEditReducer from "../screen/HomeScreen/EditCard/modules/reducer";
 
+import listCardSocialReducer from "../screen/NFCScreen/modules/reducer";
+
 const rootReducer = combineReducers({
   contentReducer,
   contentReducerEdit,
@@ -31,6 +33,8 @@ const rootReducer = combineReducers({
 
   listNameCardCreateMSReducer,
   listCardEditReducer,
+
+  listCardSocialReducer,
 });
 
 export default rootReducer;

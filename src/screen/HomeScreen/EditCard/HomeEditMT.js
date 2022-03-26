@@ -72,7 +72,6 @@ class HomeEditMT extends Component {
   }
 
   renderLogoImage = () => {
-    console.log("123+");
     console.log(this.state.data1);
     if (this.state.data1.imagelogo) {
       let urlLogo = require("../../../assets/images/logo/Logo.png");

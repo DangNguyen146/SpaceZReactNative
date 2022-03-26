@@ -97,31 +97,32 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate("HomeScreen");
   }
   login = () => {
-    // const { email, emailError, password, passwordError } = this.state;
-    // if (!Validator(email, DEFAULT_RULE)) {
-    //   this.setState({
-    //     emailError: String.emailError,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(email, EMAIL_RULE)) {
-    //   this.setState({
-    //     emailError: String.emailError1,
-    //   });
-    //   return;
-    // }
-    // if (!Validator(password, DEFAULT_RULE)) {
-    //   this.setState({
-    //     passwordError: String.passwordError,
-    //   });
-    //   return;
-    // }
+    const { email, emailError, password, passwordError } = this.state;
+    if (!Validator(email, DEFAULT_RULE)) {
+      this.setState({
+        emailError: String.emailError,
+      });
+      return;
+    }
+    if (!Validator(email, EMAIL_RULE)) {
+      this.setState({
+        emailError: String.emailError1,
+      });
+      return;
+    }
+    if (!Validator(password, DEFAULT_RULE)) {
+      this.setState({
+        passwordError: String.passwordError,
+      });
+      return;
+    }
     this.setState({ loading: true });
     // userLogin(email, password)
-    userLogin("19521317@gm.uit.edu.vn", "1234")
+    userLogin(email, password)
       .then((response) => {
         let data = response.data;
         if (data) {
+          console.log(data);
           this.showToast(data.mess);
           setUserDetails(data);
           this.props.navigation.replace("HomeScreen");

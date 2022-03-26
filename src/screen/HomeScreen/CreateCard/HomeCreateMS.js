@@ -87,8 +87,8 @@ class HomeCreateMS extends Component {
             width: this.state.data5.skew,
             height: this.state.data5.skew,
             resizeMode: "contain",
-            top: this.state.data5.logoY + "%",
-            left: this.state.data5.logoX + "%",
+            top: (this.state.data5.logoY ? this.state.data5.logoY : 0) + "%",
+            left: (this.state.data5.logoX ? this.state.data5.logoX : 0) + "%",
             position: "absolute",
           }}
           source={urlLogo}

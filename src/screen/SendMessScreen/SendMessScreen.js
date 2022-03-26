@@ -48,6 +48,7 @@ export default class SendMessScreen extends Component {
         // console.log(result.data);
         this.setState({
           dataList: result.data.data,
+          loading: false,
         });
       })
       .catch((err) => {
@@ -111,7 +112,7 @@ export default class SendMessScreen extends Component {
             />
           }
         >
-          {this.renderData()}
+          <View style={{ paddingBottom: 100 }}>{this.renderData()}</View>
         </ScrollView>
       </View>
     );

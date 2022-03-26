@@ -20,9 +20,16 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { connect } from "react-redux";
+import { TanCardEdit } from "../HomeScreen/EditCard/modules/action";
+import {
+  AddCardSocial,
+  AddCommentSocial,
+  AddLikeSocial,
+} from "./modules/action";
 
 const { width: WIDTH } = Dimensions.get("window");
-export default class NFCScreen extends Component {
+class NFCScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +38,6 @@ export default class NFCScreen extends Component {
       dataList: [],
     };
   }
-
   async componentDidMount() {
     Axios({
       url: URL + "createcard/alllist",
@@ -63,44 +69,66 @@ export default class NFCScreen extends Component {
             }}
           >
             <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-              <CardView key={index} data={dataMT} mt={1} />
-              <View style={{ padding: 5 }}></View>
-              <CardView key={index * 4} data={dataMS} mt={0} />
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  width: "100%",
+              <TouchableOpacity
+                style={{ width: "100%" }}
+                onPress={async () => {
+                  // this.props.addCardSocial(item);
+                  // console.log(item);
+                  const token = await getToken();
+                  Axios({
+                    url: URL + "createcard/alllist/" + item.id,
+                    method: "GET",
+                    headers: {
+                      token: token,
+                    },
+                  })
+                    .then((result) => {
+                      console.log(result.data);
+                      this.props.addCardSocial(result.data.data[0]);
+                      this.props.addLikeSocial(result.data.like);
+                      this.props.addCommentSocial(result.data.comment);
+                      console.log(result.data.comment);
+                      this.props.navigation.navigate("ViewCardSocial", {
+                        name: item.id,
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontFamily: "BalooTamma2-Bold",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  {item.name}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                  alignContent: "center",
-                  borderTopWidth: 1,
-                  paddingVertical: 5,
-                  borderColor: Color.gray,
-                }}
-              >
+                <CardView key={index} data={dataMT} mt={1} />
+                <View style={{ padding: 5 }}></View>
+                <CardView key={index * 4} data={dataMS} mt={0} />
+
                 <View
                   style={{
-                    width: "35%",
-                    borderEndWidth: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontFamily: "BalooTamma2-Bold",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    alignContent: "center",
+                    borderTopWidth: 1,
+                    paddingVertical: 5,
                     borderColor: Color.gray,
+                    width: "100%",
                   }}
                 >
                   <Text
@@ -109,49 +137,10 @@ export default class NFCScreen extends Component {
                       color: Color.pinkred,
                     }}
                   >
-                    <AntDesign name="like2" size={24} color={Color.pinkred} />
-                    Thích
+                    Xem chi tiết
                   </Text>
                 </View>
-                <View
-                  style={{
-                    width: "35%",
-                    borderStartWidth: 1,
-                    borderColor: Color.gray,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: Color.purple,
-                    }}
-                  >
-                    <AntDesign name="edit" size={24} color={Color.purple} />
-                    {"    "}Bình luận
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: "30%",
-                    borderStartWidth: 1,
-                    borderColor: Color.gray,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: Color.purple,
-                    }}
-                  >
-                    <Fontisto
-                      name="shopping-basket-add"
-                      size={24}
-                      color="green"
-                    />
-                    {"    "}Đặt mua
-                  </Text>
-                </View>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </>
@@ -238,3 +227,17 @@ const styles = StyleSheet.create({
     backgroundColor: Color.blue,
   },
 });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addCardSocial: (object) => {
+      dispatch(AddCardSocial(object));
+    },
+    addLikeSocial: (object) => {
+      dispatch(AddLikeSocial(object));
+    },
+    addCommentSocial: (object) => {
+      dispatch(AddCommentSocial(object));
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(NFCScreen);

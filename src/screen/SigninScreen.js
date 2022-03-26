@@ -44,6 +44,8 @@ let customFonts = {
   "BalooTamma2-Regular": require("../assets/font/BalooTamma2-Regular.ttf"),
   "BalooTamma2-SemiBold": require("../assets/font/BalooTamma2-SemiBold.ttf"),
 };
+import Axios from "axios";
+import { URL } from "../axios/config";
 const { width: WIDTH } = Dimensions.get("window");
 
 export default class SigninScreen extends Component {
@@ -60,8 +62,8 @@ export default class SigninScreen extends Component {
       lastNameError: "",
       email: "",
       emailError: "",
-      userName: "",
-      userNameError: "",
+      username: "",
+      usernameError: "",
       password: "",
       passwordError: "",
       curentpassword: "",
@@ -81,7 +83,7 @@ export default class SigninScreen extends Component {
       firstNameError: "",
       lastNameError: "",
       emailError: "",
-      userNameError: "",
+      usernameError: "",
       passwordError: "",
       curentpasswordError: "",
     });
@@ -104,8 +106,8 @@ export default class SigninScreen extends Component {
       lastNameError,
       email,
       emailError,
-      userName,
-      userNameError,
+      username,
+      usernameError,
       password,
       passwordError,
       curentpassword,
@@ -135,15 +137,15 @@ export default class SigninScreen extends Component {
       });
       return;
     }
-    if (!Validator(userName, DEFAULT_RULE)) {
+    if (!Validator(username, DEFAULT_RULE)) {
       this.setState({
-        userNameError: String.userNameError,
+        usernameError: String.usernameError,
       });
       return;
     }
-    if (!Validator(userName, USER_NAME_RULE)) {
+    if (!Validator(username, USER_NAME_RULE)) {
       this.setState({
-        userNameError: String.userNameError1,
+        usernameError: String.usernameError1,
       });
       return;
     }
@@ -166,7 +168,18 @@ export default class SigninScreen extends Component {
       return;
     }
     this.setState({ loading: true });
-    userRegister(firstName, lastName, email, userName, password)
+    let data = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+    };
+    Axios({
+      url: URL + "user/register/",
+      data: data,
+      method: "POST",
+    })
       .then((response) => {
         let data = response.data;
         if (data) {
@@ -178,8 +191,8 @@ export default class SigninScreen extends Component {
 
         this.setState({ loading: false });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -275,10 +288,10 @@ export default class SigninScreen extends Component {
                     <UserInput
                       placeholder={String.placeUserName}
                       placeholderTextColor={Color.gray}
-                      errorMessage={this.state.userNameError}
-                      onChangeText={(userName) => {
+                      errorMessage={this.state.usernameError}
+                      onChangeText={(username) => {
                         this.setState({
-                          userName,
+                          username,
                         });
                         this.resetState();
                       }}

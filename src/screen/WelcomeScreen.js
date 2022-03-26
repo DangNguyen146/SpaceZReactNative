@@ -14,6 +14,7 @@ import FontSize from "../theme/FontSize";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import String from "../theme/String";
+import { setIntroDetails } from "../utils/LocalStorage";
 
 let customFonts = {
   "BalooTamma2-ExtraBold": require("../assets/font/BalooTamma2-ExtraBold.ttf"),
@@ -69,6 +70,7 @@ export default class WelcomeScreen extends Component {
     );
   };
   _onDone = () => {
+    setIntroDetails();
     this.props.navigation.replace("Login");
   };
   _renderNextButton = () => {
