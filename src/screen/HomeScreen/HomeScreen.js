@@ -57,7 +57,6 @@ class HomeScreen extends Component {
     return this.state.dataList.map((item, index) => {
       let dataMT = JSON.parse(item.dataMT);
       let dataMS = JSON.parse(item.dataMS);
-      // console.log(dataMT);
       return (
         <>
           <View
@@ -79,7 +78,7 @@ class HomeScreen extends Component {
             >
               <CardView key={index} data={dataMT} mt={1} />
               <View style={{ padding: 5 }}></View>
-              <CardView key={index * 4} data={dataMS} mt={0} />
+              <CardView key={index * 100 + 1} data={dataMS} mt={0} />
               <View
                 style={{
                   justifyContent: "center",

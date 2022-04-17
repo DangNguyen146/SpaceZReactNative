@@ -64,6 +64,7 @@ class ViewCardPublic extends Component {
   }
   renderData = () => {
     const data = this.props.data;
+
     let dataMT = JSON.parse(data.dataMT);
     let dataMS = JSON.parse(data.dataMS);
     return (

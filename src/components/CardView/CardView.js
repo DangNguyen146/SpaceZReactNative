@@ -55,8 +55,8 @@ class CardView extends Component {
             width: this.state.data1.skew,
             height: this.state.data1.skew,
             resizeMode: "contain",
-            top: this.state.data1.logoY + "%",
-            left: this.state.data1.logoX + "%",
+            top: (this.state.data1.logoY ? this.state.data1.logoY : 0) + "%",
+            left: (this.state.data1.logoX ? this.state.data1.logoX : 0) + "%",
             position: "absolute",
           }}
           source={urlLogo}
@@ -92,8 +92,8 @@ class CardView extends Component {
             fontSize: this.state.data3.textSkew
               ? this.state.data3.textSkew
               : 20,
-            top: this.state.data3.textY + "%",
-            left: this.state.data3.textX + "%",
+            top: (this.state.data3.textY ? this.state.data3.textY : 0) + "%",
+            left: (this.state.data3.textX ? this.state.data3.textX : 0) + "%",
           }}
         >
           {this.state.data3.name}
@@ -112,8 +112,8 @@ class CardView extends Component {
         <View
           style={{
             position: "absolute",
-            left: this.state.data4.qrX + "%",
-            top: this.state.data4.qrY + "%",
+            left: (this.state.data4.qrX ? this.state.data4.qrX : 0) + "%",
+            top: (this.state.data4.qrY ? this.state.data4.qrY : 0) + "%",
             padding: 5,
             backgroundColor: "#fff",
           }}

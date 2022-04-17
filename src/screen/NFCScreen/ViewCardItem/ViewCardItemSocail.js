@@ -90,9 +90,9 @@ class ViewCardItemSocail extends Component {
     let dataMS = JSON.parse(data.dataMS);
     return (
       <>
-        <CardView key={1} data={dataMT} mt={1} />
+        <CardView key={data.id} data={dataMT} mt={1} />
         <View style={{ padding: 5 }}></View>
-        <CardView key={2 * 4} data={dataMS} mt={0} />
+        <CardView key={data.id + 100} data={dataMS} mt={0} />
         <View
           style={{
             justifyContent: "center",
